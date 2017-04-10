@@ -1,4 +1,4 @@
-# Sistema de Vagas de Estacionamento[![Build Status](https://travis-ci.org/pauloborba/estcionamento.svg?branch=master)](https://travis-ci.org/pauloborba/estacionamento)
+# Sistema de Vagas de Estacionamento[![Build Status](https://travis-ci.org/pauloborba/estacionamento.svg?branch=master)](https://travis-ci.org/pauloborba/estacionamento)
 
 Projeto da disciplina de Engenharia de Software e Sistemas - CIn/UFPE
 ## Requisitos
