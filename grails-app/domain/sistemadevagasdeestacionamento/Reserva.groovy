@@ -7,10 +7,10 @@ class Reserva {
     Date saida
 
     static constraints = {
-        usuario nullable: true, unique: true
-        vaga nullable: true, unique: true
-        entrada nullable: true
-        saida nullable: true
+        usuario nullable: false, blank: false, unique: true
+        vaga nullable: false, blank: false, unique: true
+        entrada nullable: false, blank: true
+        saida nullable: false, blank: true
 
     }
 }
