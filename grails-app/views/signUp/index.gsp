@@ -33,8 +33,8 @@
                     </tr>
 
                     <tr>
-                        <td>Preferential:</td>
-                        <td><g:checkBox name="preferential" value="${false}" /></td>
+                        <td>Preference type:</td>
+                        <td><g:select name="preferenceType" from="${User.constraints.preferenceType.inList}" /></td>
                     </tr>
                     <tr>
                         <td/>
