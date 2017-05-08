@@ -10,9 +10,9 @@ public final class AuthHelper {
         return mCurrentUsername
     }
 
-    public static void signup(String username, String sector, boolean preferential) {
+    public static void signup(String username, String sector, String preferenceType) {
         def userController = new UserController()
-        def user = new User(username: username, firstName: "Primeiro nome", lastName: "Último nome", preferredSector: sector, preferential: preferential)
+        def user = new User(username: username, firstName: "Primeiro nome", lastName: "Último nome", preferredSector: sector, preferenceType: preferenceType)
         userController.save(user)
     }
 

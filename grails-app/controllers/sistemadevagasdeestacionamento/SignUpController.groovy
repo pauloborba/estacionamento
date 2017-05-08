@@ -16,8 +16,9 @@ class SignUpController {
             String firstName = params.firstName
             String lastName = params.lastName
             String preferredSector = params.preferredSector
+            String preferenceType = params.preferenceType
 
-            user = new User(username: username, firstName: firstName, lastName: lastName, preferredSector: preferredSector)
+            user = new User(username: username, firstName: firstName, lastName: lastName, preferredSector: preferredSector, preferenceType: preferenceType)
             user.save(flush: true)
 
             AuthHelper.instance.login(username)

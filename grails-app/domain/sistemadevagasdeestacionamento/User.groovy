@@ -6,14 +6,14 @@ class User {
     String firstName
     String lastName
     String preferredSector
-    boolean preferential
+    String preferenceType // tipo de vaga que o usuario prefere
 
     static constraints = {
         username nullable: false, blank: false, unique: true
         firstName nullable: false, blank: false
         lastName nullable: false, blank: false
         preferredSector inList: ["CIn", "CCEN", "Área II"]
-        preferential nullable: false, blank: false
+        preferenceType inList: ["Normal", "Deficiente", "Idoso"]
     }
     //#end
 }
