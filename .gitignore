@@ -64,7 +64,7 @@ web-app/js/
 
 .classpath
 .project
-SistemaDeVagasDeEstacionamento-grailsPlugins.iml
-SistemaDeVagasDeEstacionamento.iml
+estacionamento-grailsPlugins.iml
+estacionamento.iml
 grailsw
 grailsw.bat
