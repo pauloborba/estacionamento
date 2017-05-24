@@ -9,22 +9,31 @@ import grails.transaction.Transactional
 class VagaController {
 
     static allowedMethods = [update: "PUT"]
-/*
-    public desocupar(Vaga vaga, User usuario){
-        !vaga.ocupada
-        vaga.reservas.last().saida = new Date()
+
+    def desocupar(Vaga vaga, User usuario){
+        vaga.ocupada = false
+       // vaga.reservas.last().saida = new Date()
     }
+
+    def reservar(Vaga vaga, User usuario) {
+       /* def reservasDoUsuario = Vaga.findAll { it ->
+            it.newInstance().reservas.each { ita ->
+               ita.usuario == usuario && ita.saida != null           //reservas com saida nula só são uteis para historico
+                }
+            }  //verificar se o user já tem outra vaga reservada
 */
-    public reservar(Vaga vaga, User usuario) {
-  /*      def reservasDoUsuario = Vaga.reservas.find {
-            it.usuario == usuario                       //verificar se o user já tem outra vaga reservada
+        def reservasDoUsuario = Vaga.all.reservas.each {ita->
+            ita.each { ite ->
+                ite.usuario == usuario && ite.saida != null
+            }
         }
 
-        if (reservasDoUsuario != null && reservasDoUsuario.vaga != vaga) {
-            def vagaAntiga = reservasDoUsuario.vaga
+
+        if (!reservasDoUsuario.first().empty && reservasDoUsuario.first().first().vaga != vaga) {
+            def vagaAntiga = reservasDoUsuario.first().first().vaga
             desocupar(vagaAntiga, usuario)          //se houver e ele quiser reservar uma diferente, desocupa a anterior
         }
-*/
+
         if(!vaga.ocupada){
             vaga.ocupada = true
             def reserva = new Reserva(usuario: usuario, vaga: vaga, entrada: new Date())

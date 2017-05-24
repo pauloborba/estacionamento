@@ -19,8 +19,9 @@ After() {
     AuthHelper.instance.logout()
 
     User.list().each { it.delete(flush: true) }
+    Reserva.list().each { it.delete(flush: true) }
 
-
+    Vaga.list().each { it.delete(flush: true) }
 
     scenarioInterceptor.destroy()
 

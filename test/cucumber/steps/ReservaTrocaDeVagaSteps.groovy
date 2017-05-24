@@ -73,6 +73,7 @@ When(~/^o usuario "([^"]*)" tenta reservar a vaga "([^"]*)" do setor "([^"]*)"$/
 Then(~/^o sistema reserva a vaga "([^"]*)" para o usuário "([^"]*)"$/) { String numero, String login ->
     Vaga criada = Vaga.findByNumero(numero)
     assert criada.ocupada
+    assert criada.reservas.last().entrada != null
 }
 And(~/^a vaga "([^"]*)" do setor "([^"]*)" já está reservada para "([^"]*)"$/) { String numero, String setor, String usuario->
     ReservaTrocaDeVagaTestDataAndOperations.checarReservaVaga(numero,setor, usuario)
