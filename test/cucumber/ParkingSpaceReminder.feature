@@ -5,28 +5,29 @@ Feature: Lembrete de vaga
 
   #controle
   Scenario: Lembrete de vaga estacionada
-    Given o sistema possui um usuário armazenado com login "ala6"
-    And o usuário está logado no sistema
-    And vaga "C3" do setor "CIn" foi reservada pelo usuário
-    When o usuário pedir um lembrete de vaga
-    Then o sistema informa a vaga
+    Given o sistema possui o usuário "ala6" armazenado
+    And o usuário "ala6" está logado no sistema
+    And a vaga "3" tipo "Normal" do setor "CIn" foi reservada pelo usuário "ala6"
+    When o usuário "ala6" pedir um lembrete de vaga
+    Then o sistema informa a vaga "3" tipo "Normal" do setor "CIn" para o usuário "ala6"
 
-  Scenario: Lembrete de vaga estacionada
-    Given o sistema possui um usuário armazenado com login "ala6"
-    And o usuário está logado no sistema
-    And nenhuma vaga foi reservada pelo usuário
-    When o usuário pedir um lembrete de vaga
-    Then o sistema informa que não foi feita nenhuma reserva
+  Scenario: Lembrete de vaga não estacionada
+    Given o sistema possui o usuário "ala6" armazenado
+    And o usuário "ala6" está logado no sistema
+    And nenhuma vaga foi reservada pelo usuário "ala6"
+    When o usuário "ala6" pedir um lembrete de vaga
+    Then o sistema informa para o usuário "ala6" que não foi feita nenhuma reserva
 
   #gui
+  @ignore
   Scenario: Lembrete de vaga estacionada web
     Given eu estou logado no sistema como "ala6"
     And eu estou na página principal
-    And eu reservei a vaga "C3" do setor "CIn"
+    And eu reservei a vaga "C3" tipo "Normal" do setor "CIn"
     When eu seleciono a opção de lembrar vaga
     Then eu vejo uma mensagem informando vaga "C3" no setor "CIn"
-
-  Scenario: Lembrete de vaga estacionada web
+  @ignore
+  Scenario: Lembrete de vaga não estacionada web
     Given eu estou logado no sistema como "ala6"
     And eu estou na página principal
     And eu não tenho nenhuma reserva no sistema
