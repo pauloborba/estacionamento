@@ -10,6 +10,7 @@
             <ul>
                 <li><a class="home" id = "logout" href="/SistemaDeVagasDeEstacionamento/">Logout</a></li>
 
+                <li><a <g:link class="lembretelink" controller="user" action="lembrete" id="${userInstance.id}">Lembrete de vaga</g:link>>Lembrete</a></li>
             </ul>
         </div>
         <div>
