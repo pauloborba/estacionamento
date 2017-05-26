@@ -12,16 +12,16 @@ class VagaController {
 
     def desocupar(Vaga vaga, User usuario){
         vaga.ocupada = false
-       // vaga.reservas.last().saida = new Date()
+        // vaga.reservas.last().saida = new Date()
     }
 
     def reservar(Vaga vaga, User usuario) {
-       /* def reservasDoUsuario = Vaga.findAll { it ->
-            it.newInstance().reservas.each { ita ->
-               ita.usuario == usuario && ita.saida != null           //reservas com saida nula só são uteis para historico
-                }
-            }  //verificar se o user já tem outra vaga reservada
-*/
+        /* def reservasDoUsuario = Vaga.findAll { it ->
+             it.newInstance().reservas.each { ita ->
+                ita.usuario == usuario && ita.saida != null           //reservas com saida nula só são uteis para historico
+                 }
+             }  //verificar se o user já tem outra vaga reservada
+ */
         def reservasDoUsuario = Vaga.all.reservas.each {ita->
             ita.each { ite ->
                 ite.usuario == usuario && ite.saida != null
@@ -38,11 +38,10 @@ class VagaController {
             vaga.ocupada = true
             def reserva = new Reserva(usuario: usuario, vaga: vaga, entrada: new Date())
             vaga.reservas.add(reserva)
-  /*      }else{
-            if(vaga.reservas.last().usuario != usuario){
-
-            }*/
-       }
+            /*      }else{
+                      if(vaga.reservas.last().usuario != usuario){
+                      }*/
+        }
     }
 
     def index(Integer max) {
@@ -68,31 +67,26 @@ class VagaController {
         redirect(action: "show", id: vagaInstance.id)
     }
     @Transactional
-  /*  def save(Vaga vagaInstance) {
-
-        if (vagaInstance == null) {
-
-            vagaInstance = new Vaga(params)
-            notFound()
-            return
-        }
-
-        if (vagaInstance.hasErrors()) {
-            respond vagaInstance.errors, view:'create'
-            return
-        }
-
-        vagaInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'vaga.label', default: 'Vaga'), vagaInstance.id])
-                redirect vagaInstance
-            }
-            '*' { respond vagaInstance, [status: CREATED] }
-        }
-    }
-*/
+    /*  def save(Vaga vagaInstance) {
+          if (vagaInstance == null) {
+              vagaInstance = new Vaga(params)
+              notFound()
+              return
+          }
+          if (vagaInstance.hasErrors()) {
+              respond vagaInstance.errors, view:'create'
+              return
+          }
+          vagaInstance.save flush:true
+          request.withFormat {
+              form multipartForm {
+                  flash.message = message(code: 'default.created.message', args: [message(code: 'vaga.label', default: 'Vaga'), vagaInstance.id])
+                  redirect vagaInstance
+              }
+              '*' { respond vagaInstance, [status: CREATED] }
+          }
+      }
+  */
     def edit(Vaga vagaInstance) {
         respond vagaInstance
     }

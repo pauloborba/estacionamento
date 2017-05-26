@@ -4,6 +4,13 @@ Feature: Lembrete de vaga
   So that I can remember where my car is in the parking space
 
   #controle
+  Scenario: Lembrete de vaga não estacionada
+    Given o sistema possui o usuário "divino" armazenado
+    And o usuário "divino" está logado no sistema
+    And nenhuma vaga foi reservada pelo usuário "divino"
+    When o usuário "divino" pedir um lembrete de vaga
+    Then o sistema informa para o usuário "divino" que não foi feita nenhuma reserva
+
   Scenario: Lembrete de vaga estacionada
     Given o sistema possui o usuário "ala6" armazenado
     And o usuário "ala6" está logado no sistema
@@ -11,22 +18,15 @@ Feature: Lembrete de vaga
     When o usuário "ala6" pedir um lembrete de vaga
     Then o sistema informa a vaga "3" tipo "Normal" do setor "CIn" para o usuário "ala6"
 
-  Scenario: Lembrete de vaga não estacionada
-    Given o sistema possui o usuário "ala6" armazenado
-    And o usuário "ala6" está logado no sistema
-    And nenhuma vaga foi reservada pelo usuário "ala6"
-    When o usuário "ala6" pedir um lembrete de vaga
-    Then o sistema informa para o usuário "ala6" que não foi feita nenhuma reserva
-
   #gui
-#  @ignore
+  @ignore
   Scenario: Lembrete de vaga estacionada web
     Given eu estou logado no sistema como "ala6"
     And eu estou na página principal
     And eu reservei a vaga "3" tipo "Normal" do setor "CIn"
     When eu seleciono a opção de lembrar vaga
     Then eu vejo uma mensagem informando vaga "3" no setor "CIn"
-#  @ignore
+  @ignore
   Scenario: Lembrete de vaga não estacionada web
     Given eu estou logado no sistema como "ala6"
     And eu estou na página principal

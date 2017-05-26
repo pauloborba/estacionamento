@@ -30,10 +30,8 @@ And(~/^a vaga "([^"]*)" tipo "([^"]*)" do setor "([^"]*)" foi reservada pelo usu
     ReservaTrocaDeVagaTestDataAndOperations.criarVaga(spot, sector, type)
     def currentUser = User.findByUsername(username)
     def currentParkingSpot = Vaga.findByNumero(spot)
-    ReservaTrocaDeVagaTestDataAndOperations.reservarVaga(currentParkingSpot, currentUser) //ocupada == true
-    if (currentParkingSpot.setor == sector) {
-          assert  currentParkingSpot.ocupada //invertendo o boolean para funcionar enquanto não tem reservar
-    }
+    assert currentParkingSpot.numero =="3"
+    ReservaTrocaDeVagaTestDataAndOperations.checarReservaVaga(spot, sector, username)
 }
 And(~/^nenhuma vaga foi reservada pelo usuário "([^"]*)"$/) { String username ->
 //  procurar em todas as reservas se tem o usuario
