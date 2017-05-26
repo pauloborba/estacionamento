@@ -14,8 +14,8 @@ class UserController {
         def booking = Reserva.findByUsuario(user)
 
         if (booking){
-            flash.message = "O usuário estacionou na vaga ${booking.vaga.numero} tipo ${booking.vaga.preferenceType} do setor ${booking.vaga.setor}"
-            } else {
+            flash.message = "O usuário estacionou na vaga ${booking.vaga.numero}"
+        } else {
             flash.message = "O usuário não estacionou em nenhuma vaga"
         }
     }

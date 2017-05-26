@@ -3,21 +3,6 @@ Feature: Lembrete de vaga
   I want to be informed where I parked my car
   So that I can remember where my car is in the parking space
 
-  #controle
-  Scenario: Lembrete de vaga não estacionada
-    Given o sistema possui o usuário "divino" armazenado
-    And o usuário "divino" está logado no sistema
-    And nenhuma vaga foi reservada pelo usuário "divino"
-    When o usuário "divino" pedir um lembrete de vaga
-    Then o sistema informa para o usuário "divino" que não foi feita nenhuma reserva
-
-  Scenario: Lembrete de vaga estacionada
-    Given o sistema possui o usuário "ala6" armazenado
-    And o usuário "ala6" está logado no sistema
-    And a vaga "3" tipo "Normal" do setor "CIn" foi reservada pelo usuário "ala6"
-    When o usuário "ala6" pedir um lembrete de vaga
-    Then o sistema informa a vaga "3" tipo "Normal" do setor "CIn" para o usuário "ala6"
-
   #gui
 #  @ignore
   Scenario: Lembrete de vaga não estacionada web
@@ -33,5 +18,21 @@ Feature: Lembrete de vaga
     And eu estou na página principal
     And eu reservei a vaga "5" tipo "Normal" do setor "CIn"
     When eu seleciono a opção de lembrar vaga
-    Then eu vejo uma mensagem informando vaga "5" no setor "CIn"
+    Then eu vejo uma mensagem informando vaga "5" tipo "Normal" no setor "CIn"
+
+  #controle
+  @ignore
+  Scenario: Lembrete de vaga não estacionada
+    Given o sistema possui o usuário "divino" armazenado
+    And o usuário "divino" está logado no sistema
+    And nenhuma vaga foi reservada pelo usuário "divino"
+    When o usuário "divino" pedir um lembrete de vaga
+    Then o sistema informa para o usuário "divino" que não foi feita nenhuma reserva
+  @ignore
+  Scenario: Lembrete de vaga estacionada
+    Given o sistema possui o usuário "ala6" armazenado
+    And o usuário "ala6" está logado no sistema
+    And a vaga "3" tipo "Normal" do setor "CIn" foi reservada pelo usuário "ala6"
+    When o usuário "ala6" pedir um lembrete de vaga
+    Then o sistema informa a vaga "3" tipo "Normal" do setor "CIn" para o usuário "ala6"
 

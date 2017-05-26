@@ -34,7 +34,6 @@ And(~/^a vaga "([^"]*)" tipo "([^"]*)" do setor "([^"]*)" foi reservada pelo usu
     ReservaTrocaDeVagaTestDataAndOperations.checarReservaVaga(spot, sector, username)
 }
 And(~/^nenhuma vaga foi reservada pelo usuário "([^"]*)"$/) { String username ->
-//  procurar em todas as reservas se tem o usuario
     def currentUser = User.findByUsername(username)
     Reserva.each { assert it.newInstance().usuario != currentUser    }
 }
@@ -65,33 +64,41 @@ Given(~/^eu estou logado no sistema como "([^"]*)"$/) { String username ->
     to SignUpPage
     at SignUpPage
     page.proceed(username, "CIn", "Normal")
-    def user = User.findByUsername(username)
-//    page.login(username)
 }
 And(~/^eu estou na página principal$/) { ->
     at HomePage
 }
 And(~/^eu reservei a vaga "([^"]*)" tipo "([^"]*)" do setor "([^"]*)"$/) { String spot, String type, String sector ->
     ReservaTrocaDeVagaTestDataAndOperations.criarVaga(spot, sector, type)
-    def aux = AuthHelper.instance.currentUsername
-    def currentUser = User.findByUsername(aux)
     def currentSpot = Vaga.findByNumero(spot)
-    ReservaTrocaDeVagaTestDataAndOperations.reservarVaga(currentSpot, currentUser)
-    assert currentSpot.setor == sector
+    //confirmação da vaga
     assert currentSpot.preferenceType == type
+    assert currentSpot.setor == sector
 
-    Reserva.findByUsuario(currentUser)
+    def aHelper = AuthHelper.instance.currentUsername
+    def currentUser = User.findByUsername(aHelper)
+
+//    esperando reserva de Gabriel
+
+//    ReservaTrocaDeVagaTestDataAndOperations.reservarVaga(currentSpot, currentUser)
+//    ReservaTrocaDeVagaTestDataAndOperations.checarReservaVaga(spot, sector, aHelper)
+
+//    def booking = Reserva.findByVaga(currentSpot)
+
+//    assert booking.vaga.setor == sector
+//    assert booking.vaga.preferenceType == type
 }
 And(~/^eu não tenho nenhuma reserva no sistema$/) { ->
-
+    def aHelper = AuthHelper.instance.currentUsername
+    def currentUser = User.findByUsername(aHelper)
+    Reserva.each { assert it.newInstance().usuario != currentUser    }
 }
 When(~/^eu seleciono a opção de lembrar vaga$/) { ->
-    at HomePage
-//    assert page.reminded
+    assert page.reminded() != null
 }
-Then(~/^eu vejo uma mensagem informando vaga "([^"]*)" no setor "([^"]*)"$/) { String spot, String sector ->
-//    assert page.message(spot)
+Then(~/^eu vejo uma mensagem informando vaga "([^"]*)" tipo "([^"]*)" no setor "([^"]*)"$/) { String spot, String type, String sector ->
+    assert page.readFlashMessage() != null
 }
 Then(~/^eu vejo uma mensagem informando que não foi feita uma reserva$/) { ->
-//    assert page.message()
+    assert page.readFlashMessage() != null
 }
