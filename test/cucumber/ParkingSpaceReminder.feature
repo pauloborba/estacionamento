@@ -19,18 +19,19 @@ Feature: Lembrete de vaga
     Then o sistema informa a vaga "3" tipo "Normal" do setor "CIn" para o usuário "ala6"
 
   #gui
-  @ignore
-  Scenario: Lembrete de vaga estacionada web
-    Given eu estou logado no sistema como "ala6"
-    And eu estou na página principal
-    And eu reservei a vaga "3" tipo "Normal" do setor "CIn"
-    When eu seleciono a opção de lembrar vaga
-    Then eu vejo uma mensagem informando vaga "3" no setor "CIn"
-  @ignore
+#  @ignore
   Scenario: Lembrete de vaga não estacionada web
-    Given eu estou logado no sistema como "ala6"
+    Given eu estou logado no sistema como "lima"
     And eu estou na página principal
     And eu não tenho nenhuma reserva no sistema
     When eu seleciono a opção de lembrar vaga
     Then eu vejo uma mensagem informando que não foi feita uma reserva
+
+#  @ignore
+  Scenario: Lembrete de vaga estacionada web
+    Given eu estou logado no sistema como "allan"
+    And eu estou na página principal
+    And eu reservei a vaga "5" tipo "Normal" do setor "CIn"
+    When eu seleciono a opção de lembrar vaga
+    Then eu vejo uma mensagem informando vaga "5" no setor "CIn"
 

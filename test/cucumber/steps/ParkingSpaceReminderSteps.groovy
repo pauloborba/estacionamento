@@ -87,11 +87,11 @@ And(~/^eu não tenho nenhuma reserva no sistema$/) { ->
 }
 When(~/^eu seleciono a opção de lembrar vaga$/) { ->
     at HomePage
-//    assert page.lembrete
+//    assert page.reminded
 }
 Then(~/^eu vejo uma mensagem informando vaga "([^"]*)" no setor "([^"]*)"$/) { String spot, String sector ->
 //    assert page.message(spot)
 }
 Then(~/^eu vejo uma mensagem informando que não foi feita uma reserva$/) { ->
-//    assert  page.message()
+//    assert page.message()
 }

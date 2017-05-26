@@ -9,12 +9,12 @@ class HomePage extends Page {
         title ==~ "Home"
     }
 
-    def lembrete(){
-        $(".lembretelink").click()
+    def reminded(){
+        $(".reminder").click()
     }
 
-    def message(String spot){
-        $("div.message").text() == ("O usuário estacionou na vaga ${spot}" as String)
+    def message(String spot, type, sector){
+        $("div.message").text() == ("O usuário estacionou na vaga ${spot} tipo ${type} do setor ${sector}" as String)
     }
 
     def message(){ // quando o usuario não reservar e clicar no lembrete
