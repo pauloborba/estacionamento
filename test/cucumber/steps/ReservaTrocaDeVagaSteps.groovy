@@ -1,6 +1,9 @@
 package steps
 
 import cucumber.api.PendingException
+import pages.CriarVaga
+import pages.ListaDeVagas
+import pages.SignUpPage
 import sistemadevagasdeestacionamento.AuthHelper
 import sistemadevagasdeestacionamento.User
 import sistemadevagasdeestacionamento.Vaga
@@ -39,7 +42,10 @@ Given(~/^O sistema tem o usuario "([^"]*)" armazenado$/) { String username ->
 }
 
 And(~/^eu estou logado no sistema como "([^"]*)"$/) { String login ->
+    to SignUpPage
+    at SignUpPage
     AuthHelper.instance.login(login)
+    page.proceed(login, "CIn", "Normal")
     assert AuthHelper.instance.currentUsername == login
 }
 And(~/^existe a vaga "([^"]*)" no setor "([^"]*)" do tipo "([^"]*)"$/) { String numero, String setor, String tipo ->
@@ -83,39 +89,41 @@ And(~/^a vaga "([^"]*)" do setor "([^"]*)" já está reservada para "([^"]*)"$/)
         assert vaga.ocupada
     }
 }
-And(~/^estou na página de listagem de vagas$/) { ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+And(~/^estou na pagina de listagem de vagas$/) { ->
+    to ListaDeVagas
+    at ListaDeVagas
 }
-And(~/^a vaga "([^"]*)" do setor "([^"]*)" aparece como diponível na lista de vagas$/) { String arg1, String arg2 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+
+And(~/^a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)" aparece como diponivel$/) { String numeroVaga, String setorVaga, String tipoVaga ->
+    to ListaDeVagas
+    at ListaDeVagas
+    page.vagaLimpa(numeroVaga, setorVaga, tipoVaga)
 }
-When(~/^Eu seleciono a opção de reservar a vaga "([^"]*)"$/) { String arg1 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
-}
+
 Then(~/^Eu vejo uma mensagem de confirmação$/) { ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+   assert page.readFlashMessage() != null
 }
-And(~/^Eu reservei a vaga "([^"]*)" do setor "([^"]*)"$/) { String arg1, String arg2 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+
+
+And(~/^a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)" aparece como reservada$/) { String numeroVaga, String setorVaga, String tipoVaga ->
+    to ListaDeVagas
+    at ListaDeVagas
+    page.vagaOcupada(numeroVaga, setorVaga, tipoVaga)
 }
-And(~/^a vaga "([^"]*)" do setor "([^"]*)" aparece como disponível$/) { String arg1, String arg2 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+
+When(~/^eu seleciono a opção de reservar a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)"$/) { String numero, String setor, String tipo ->
+    to ListaDeVagas
+    at ListaDeVagas
+    page.reservarVaga(numero, setor, tipo)
 }
-When(~/^o usuário seleciona a opção de reservar a vaga "([^"]*)"$/) { String arg1 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+And(~/^eu crio a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)"$/) { String numeroVaga, String setorVaga, String tipoVaga ->
+    to CriarVaga
+    at CriarVaga
+    page.criarVaga(numeroVaga, setorVaga, tipoVaga)
 }
-Then(~/^a vaga "([^"]*)" do setor "([^"]*)" aparecerá como disponível$/) { String arg1, String arg2 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
-}
-And(~/^a vaga "([^"]*)" do setor "([^"]*)"  como reservada para "([^"]*)"$/) { String arg1, String arg2, String arg3 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+And(~/^a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)" está reservada$/) { String numero, String setor, String tipo ->
+    to ListaDeVagas
+    at ListaDeVagas
+    page.reservarVaga(numero, setor, tipo)
+
 }

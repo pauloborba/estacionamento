@@ -17,6 +17,6 @@
             <h4>Olá, ${userInstance.firstName}</h4>
             <br>
             <br> Escolha uma das opções:
-        <g:link controller="vaga" action="index">Fazer login</g:link>
+        <g:link controller="vaga" action="index"> Lista de Vagas</g:link>
         </div>
 </html>

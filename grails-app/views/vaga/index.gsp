@@ -31,7 +31,12 @@
 						<g:sortableColumn property="preferenceType" title="${message(code: 'vaga.preferenceType.label', default: 'Preference Type')}" />
 					
 						<g:sortableColumn property="ocupada" title="${message(code: 'vaga.ocupada.label', default: 'Ocupada')}" />
-					
+
+						<g:sortableColumn property="usuario" title="${message(code: 'vaga.reservas.usuario.label', default: 'Usuario')}"/>
+
+						<g:sortableColumn property="saida" title="${message(code: 'vaga.reservas.saida', default: 'Saida')}"/>
+
+						<g:sortableColumn property="reservar" title="${message(code: 'vaga.reservar.label', default: 'Reservar')}"/>
 					</tr>
 				</thead>
 				<tbody>
@@ -45,7 +50,13 @@
 						<td>${fieldValue(bean: vagaInstance, field: "preferenceType")}</td>
 					
 						<td><g:formatBoolean boolean="${vagaInstance.ocupada}" /></td>
-					
+
+						<td>${fieldValue(bean: vagaInstance, field: "reservas.usuario.username")}</td>
+
+						<td>${fieldValue(bean: vagaInstance, field: "reservas.saida")}</td>
+
+						<td><g:link action="reservar" id="${vagaInstance.id}">
+							Reservar ${fieldValue(bean: vagaInstance, field: "numero")} </g:link> </td>
 					</tr>
 				</g:each>
 				</tbody>
