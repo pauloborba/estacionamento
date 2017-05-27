@@ -7,6 +7,7 @@ import sistemadevagasdeestacionamento.AuthHelper
 import sistemadevagasdeestacionamento.Reserva
 import sistemadevagasdeestacionamento.User
 import sistemadevagasdeestacionamento.Vaga
+import sistemadevagasdeestacionamento.VagaController
 
 
 /**
@@ -40,7 +41,8 @@ And(~/^nenhuma vaga foi reservada pelo usuário "([^"]*)"$/) { String username -
 When(~/^o usuário "([^"]*)" pedir um lembrete de vaga$/) { String username ->
     def currentUser = User.findByUsername(username)
     assert currentUser
-    //metodo lembrete de vaga em VagaController
+    def controller = new VagaController()
+//    controller.reminder(currentUser)
 }
 Then(~/^o sistema informa a vaga "([^"]*)" tipo "([^"]*)" do setor "([^"]*)" para o usuário "([^"]*)"$/) { String spot, String type, String sector, String username ->
     Vaga currentSpot = Vaga.findByNumero(spot)
@@ -98,6 +100,7 @@ When(~/^eu seleciono a opção de lembrar vaga$/) { ->
 }
 Then(~/^eu vejo uma mensagem informando vaga "([^"]*)" tipo "([^"]*)" no setor "([^"]*)"$/) { String spot, String type, String sector ->
     assert page.readFlashMessage() != null
+//    assert page.message(spot)
 }
 Then(~/^eu vejo uma mensagem informando que não foi feita uma reserva$/) { ->
     assert page.readFlashMessage() != null

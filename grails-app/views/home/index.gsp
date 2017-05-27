@@ -9,13 +9,11 @@
         <div class="nav" role="navigation">
             <ul>
                 <li><a class="home" id = "logout" href="/SistemaDeVagasDeEstacionamento/">Logout</a></li>
-
-                <li><a class="reminder" controller="user" action="reminded" id="${userInstance.id}">Reminded</a></li>
+                <li><a class="reminded" controller="user" action="reminder" id="${userInstance.id}">Reminded</a></li>
             </ul>
         </div>
-
         <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+            <div class="message" role="status">${flash.message}</div>
         </g:if>
 
         <div>

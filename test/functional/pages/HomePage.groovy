@@ -10,10 +10,9 @@ class HomePage extends Page {
     }
 
     def reminded(){
-        $(".reminder").click()
+        $(".reminded").click()
     }
-
-    def message2(String spot){
+    def message(String spot){
         $("div", class: "message").text() == ("O usuário estacionou na vaga ${spot}" as String)
     }
 
