@@ -6,7 +6,8 @@ class ListaDeVagas extends Page {
     static url = 'vaga/index'
 
     static at = {
-        title ==~ /Listagem Vaga/
+//        title ==~ /Listagem Vaga/
+          title ==~ /Vaga List/
     }
 
     boolean acharVaga(String vaga, String setor, String tipo){

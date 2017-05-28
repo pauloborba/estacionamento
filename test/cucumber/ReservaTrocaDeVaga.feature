@@ -30,7 +30,6 @@ And estou na pagina de listagem de vagas
 And a vaga "4" do setor "CIn" do tipo "Normal" aparece como diponivel
 When eu seleciono a opção de reservar a vaga "4" do setor "CIn" do tipo "Normal"
 Then a vaga "4" do setor "CIn" do tipo "Normal" aparece como reservada
-#Then Eu vejo uma mensagem de confirmação
 
 Scenario: Troca de Vaga Gui
 Given eu estou logado no sistema como "ghds"

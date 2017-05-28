@@ -18,7 +18,7 @@ Before() {
 After() {
     AuthHelper.instance.logout()
 
- 
+
  /*   Reserva.list().each { it.delete(flush: true) }
     Vaga.list().each { it.delete(flush: true) }
     User.list().each { it.delete(flush: true) }  */

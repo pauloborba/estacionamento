@@ -13,28 +13,7 @@ import sistemadevagasdeestacionamento.VagaController
 
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
-/*
-def criarVaga(String numeroVaga, String setorVaga, String tipoVaga){
-    def controlador = new VagaController()
-    //controlador.params << [numero: numeroVaga, setor: setorVaga, preferenceType: tipoVaga]
-     controlador.save(new Vaga([numero: numeroVaga, setor: setorVaga, preferenceType: tipoVaga]))
-   // controlador.save()
-    controlador.response.reset()
-}
 
-def reservarVaga(Vaga vaga, User usuario){
-    def controlador = new VagaController()
-    controlador.reservar(vaga, usuario)
-    controlador.response.reset()
-}
-def checarReservaVaga(String numero, String setor, String usuario){
-    Vaga criada = Vaga.findByNumero(numero)
-    User user = User.findByUsername(usuario)
-    if(criada.getSetor() == setor){
-        reservarVaga(criada, user)
-    }
-}
-*/
 Given(~/^O sistema tem o usuario "([^"]*)" armazenado$/) { String username ->
     AuthHelper.instance.signup(username, "CCEN", "Normal")
     def currentUser = User.findByUsername(username)
@@ -50,17 +29,8 @@ And(~/^eu estou logado no sistema como "([^"]*)"$/) { String login ->
 }
 And(~/^existe a vaga "([^"]*)" no setor "([^"]*)" do tipo "([^"]*)"$/) { String numero, String setor, String tipo ->
     ReservaTrocaDeVagaTestDataAndOperations.criarVaga(numero, setor, tipo)
-//    criarVaga(numero, setor, tipo)
-/*
-    def controlador = new VagaController()
-    controlador.params << [numero: numero, setor: setor, preferenceType: tipo]
 
-
-    controlador.save()
-    controlador.response.reset()
-*/
-    def vaga = Vaga.findByNumero(numero)
-//    assert vaga!=null
+     def vaga = Vaga.findByNumero(numero)
      assert vaga?.getSetor() == setor
      assert vaga?.getPreferenceType() == tipo
 }
@@ -75,7 +45,7 @@ When(~/^o usuario "([^"]*)" tenta reservar a vaga "([^"]*)" do setor "([^"]*)"$/
      ReservaTrocaDeVagaTestDataAndOperations.checarReservaVaga(numero, setor, login)
    // checarReservaVaga(numero, setor, login)
 }
-//falta completar (depende da logica do metodo reservar)
+
 Then(~/^o sistema reserva a vaga "([^"]*)" para o usuário "([^"]*)"$/) { String numero, String login ->
     Vaga criada = Vaga.findByNumero(numero)
     assert criada.ocupada
