@@ -80,15 +80,13 @@ And(~/^eu reservei a vaga "([^"]*)" tipo "([^"]*)" do setor "([^"]*)"$/) { Strin
     def aHelper = AuthHelper.instance.currentUsername
     def currentUser = User.findByUsername(aHelper)
 
-//    esperando reserva de Gabriel
+    ReservaTrocaDeVagaTestDataAndOperations.reservarVaga(currentSpot, currentUser)
+    ReservaTrocaDeVagaTestDataAndOperations.checarReservaVaga(spot, sector, aHelper)
 
-//    ReservaTrocaDeVagaTestDataAndOperations.reservarVaga(currentSpot, currentUser)
-//    ReservaTrocaDeVagaTestDataAndOperations.checarReservaVaga(spot, sector, aHelper)
+    def booking = Reserva.findByVaga(currentSpot)
 
-//    def booking = Reserva.findByVaga(currentSpot)
-
-//    assert booking.vaga.setor == sector
-//    assert booking.vaga.preferenceType == type
+    assert booking.vaga.setor == sector
+    assert booking.vaga.preferenceType == type
 }
 And(~/^eu não tenho nenhuma reserva no sistema$/) { ->
     def aHelper = AuthHelper.instance.currentUsername

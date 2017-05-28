@@ -4,44 +4,48 @@ package sistemadevagasdeestacionamento
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import sistemadevagasdeestacionamento.AuthHelper
 
 @Transactional(readOnly = true)
 class VagaController {
 
     static allowedMethods = [update: "PUT"]
 
-    def desocupar(Vaga vaga, User usuario){
+    def desocupar(Vaga vaga){
         vaga.ocupada = false
-        // vaga.reservas.last().saida = new Date()
+        vaga.reservas.last().setSaida(new Date())
+        vaga.save(flush:true)
+    }
+    def varreReservas(Vaga, String usuario){
+        def reservasDoUsuario = Vaga.all.reservas.each {ita->
+            ita.each { ite ->
+                ite.usuario.username == usuario && ite.saida != null
+            }
+        }
+        reservasDoUsuario
     }
 
     def reservar(Vaga vaga, User usuario) {
-        /* def reservasDoUsuario = Vaga.findAll { it ->
-             it.newInstance().reservas.each { ita ->
-                ita.usuario == usuario && ita.saida != null           //reservas com saida nula só são uteis para historico
-                 }
-             }  //verificar se o user já tem outra vaga reservada
- */
-        def reservasDoUsuario = Vaga.all.reservas.each {ita->
-            ita.each { ite ->
-                ite.usuario == usuario && ite.saida != null
+        def logado = AuthHelper.instance.currentUsername
+
+        def reservasDoUsuario = varreReservas(vaga, logado)  //varre as reservas para ver se o usuario já ocupada alguma vaga
+
+        if(reservasDoUsuario != null) {
+           reservasDoUsuario.each { it ->
+                it.each { ita ->            //encontrada a vaga já ocupada para o usuario e a desocupa
+                    desocupar(ita.vaga)
+                }
             }
-        }
-
-
-        if (!reservasDoUsuario.first().empty && reservasDoUsuario.first().first().vaga != vaga) {
-            def vagaAntiga = reservasDoUsuario.first().first().vaga
-            desocupar(vagaAntiga, usuario)          //se houver e ele quiser reservar uma diferente, desocupa a anterior
         }
 
         if(!vaga.ocupada){
             vaga.ocupada = true
-            def reserva = new Reserva(usuario: usuario, vaga: vaga, entrada: new Date())
+            User testeUser = User.findByUsername(logado)
+            def reserva = new Reserva(usuario: testeUser, vaga: vaga, entrada: new Date())
             vaga.reservas.add(reserva)
-            /*      }else{
-                      if(vaga.reservas.last().usuario != usuario){
-                      }*/
+            vaga.save(flush:true)
         }
+
     }
 
     def index(Integer max) {
@@ -52,6 +56,7 @@ class VagaController {
     def show(Vaga vagaInstance) {
         respond vagaInstance
     }
+
 
     def create() {
         respond new Vaga(params)
@@ -67,26 +72,31 @@ class VagaController {
         redirect(action: "show", id: vagaInstance.id)
     }
     @Transactional
-    /*  def save(Vaga vagaInstance) {
-          if (vagaInstance == null) {
-              vagaInstance = new Vaga(params)
-              notFound()
-              return
-          }
-          if (vagaInstance.hasErrors()) {
-              respond vagaInstance.errors, view:'create'
-              return
-          }
-          vagaInstance.save flush:true
-          request.withFormat {
-              form multipartForm {
-                  flash.message = message(code: 'default.created.message', args: [message(code: 'vaga.label', default: 'Vaga'), vagaInstance.id])
-                  redirect vagaInstance
-              }
-              '*' { respond vagaInstance, [status: CREATED] }
-          }
-      }
-  */
+  /*  def save(Vaga vagaInstance) {
+
+        if (vagaInstance == null) {
+
+            vagaInstance = new Vaga(params)
+            notFound()
+            return
+        }
+
+        if (vagaInstance.hasErrors()) {
+            respond vagaInstance.errors, view:'create'
+            return
+        }
+
+        vagaInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'vaga.label', default: 'Vaga'), vagaInstance.id])
+                redirect vagaInstance
+            }
+            '*' { respond vagaInstance, [status: CREATED] }
+        }
+    }
+*/
     def edit(Vaga vagaInstance) {
         respond vagaInstance
     }
