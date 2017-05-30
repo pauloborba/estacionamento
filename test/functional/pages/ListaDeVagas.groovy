@@ -6,7 +6,6 @@ class ListaDeVagas extends Page {
     static url = 'vaga/index'
 
     static at = {
-//        title ==~ /Listagem Vaga/
           title ==~ /Vaga List/
     }
 
@@ -21,14 +20,12 @@ class ListaDeVagas extends Page {
 
     boolean vagaOcupada(String numeroVaga, String setorVaga, String tipoVaga){
         boolean encontrada = acharVaga(numeroVaga, setorVaga, tipoVaga)
-      //  boolean ocupada = $("tr").has("td",text: "Sim")
         boolean ocupada = $("tr").has("td",text: "True")
         assert (encontrada && ocupada)
     }
 
     boolean vagaLimpa(String numeroVaga, String setorVaga, String tipoVaga){
         boolean encontrada = acharVaga(numeroVaga, setorVaga, tipoVaga)
-   //     boolean naoOcupada = $("tr").has("td",text: "Não")
         boolean naoOcupada = $("tr").has("td",text: "False")
         assert (encontrada && naoOcupada)
     }

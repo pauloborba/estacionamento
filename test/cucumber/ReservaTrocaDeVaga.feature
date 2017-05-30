@@ -5,7 +5,7 @@ So that eu possa estacionar na vaga reservada
 
 Scenario: Troca de vaga
 Given O sistema tem o usuario "Henrique" armazenado
-And eu estou logado no sistema como "Henrique"
+And estou logado no sistema como "Henrique"
 And existe a vaga "1" no setor "CIn" do tipo "Normal"
 And existe a vaga "2" no setor "CCEN" do tipo "Normal"
 And a vaga "1" do setor "CIn" já está reservada para "Henrique"
@@ -16,7 +16,7 @@ And a vaga "1" do setor "CIn" está disponível
 
 Scenario: Fazer a reserva de uma vaga
 Given O sistema tem o usuario "Gabriel" armazenado
-And eu estou logado no sistema como "Gabriel"
+And estou logado no sistema como "Gabriel"
 And existe a vaga "3" no setor "CIn" do tipo "Normal"
 And a vaga "3" do setor "CIn" está disponível
 When o usuario "Gabriel" tenta reservar a vaga "3" do setor "CIn"

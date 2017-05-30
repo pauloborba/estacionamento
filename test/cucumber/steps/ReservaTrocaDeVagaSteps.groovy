@@ -43,7 +43,6 @@ And(~/^a vaga "([^"]*)" do setor "([^"]*)" está disponível$/) { String numero,
 
 When(~/^o usuario "([^"]*)" tenta reservar a vaga "([^"]*)" do setor "([^"]*)"$/) { String login, String numero, String setor ->
      ReservaTrocaDeVagaTestDataAndOperations.checarReservaVaga(numero, setor, login)
-   // checarReservaVaga(numero, setor, login)
 }
 
 Then(~/^o sistema reserva a vaga "([^"]*)" para o usuário "([^"]*)"$/) { String numero, String login ->
@@ -53,7 +52,6 @@ Then(~/^o sistema reserva a vaga "([^"]*)" para o usuário "([^"]*)"$/) { String
 }
 And(~/^a vaga "([^"]*)" do setor "([^"]*)" já está reservada para "([^"]*)"$/) { String numero, String setor, String usuario->
     ReservaTrocaDeVagaTestDataAndOperations.checarReservaVaga(numero,setor, usuario)
- //   checarReservaVaga(numero, setor, usuario)
     Vaga vaga = Vaga.findByNumero(numero)
     if (vaga.setor == setor){
         assert vaga.ocupada
@@ -73,7 +71,6 @@ And(~/^a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)" aparece como diponi
 Then(~/^Eu vejo uma mensagem de confirmação$/) { ->
    assert page.readFlashMessage() != null
 }
-
 
 And(~/^a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)" aparece como reservada$/) { String numeroVaga, String setorVaga, String tipoVaga ->
     to ListaDeVagas
@@ -96,4 +93,8 @@ And(~/^a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)" está reservada$/) 
     at ListaDeVagas
     page.reservarVaga(numero, setor, tipo)
 
+}
+And(~/^estou logado no sistema como "([^"]*)"$/) { String login ->
+    AuthHelper.instance.login(login)
+    assert AuthHelper.instance.currentUsername == login
 }
