@@ -10,6 +10,18 @@ class UserController {
         respond User.list(params), model:[userInstanceCount: User.count()]
     }
 
+    def reminder(User user) {
+        def booking = Reserva.findByUsuario(user)
+        def spot = booking.vaga
+        assert spot.numero
+
+        if (booking){
+            flash.message = "O usuário estacionou na vaga ${spot.numero}"
+        } else {
+            flash.message = "O usuário não estacionou em nenhuma vaga"
+        }
+    }
+
     def show(User userInstance) {
         respond userInstance
     }
