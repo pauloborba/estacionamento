@@ -12,8 +12,8 @@ class HomePage extends Page {
     def reminded(){
         $(".reminded").click()
     }
-    def message(String spot){
-        $("div", class: "message").text() == ("O usuário estacionou na vaga ${spot}" as String)
+    def message(String spot, String type, String sector){
+        $("div", class: "message").text() == ("O usuário estacionou na vaga ${spot} do tipo ${type} no setor ${sector}" as String)
     }
 
     def message(){ // quando o usuario não reservar e clicar no lembrete

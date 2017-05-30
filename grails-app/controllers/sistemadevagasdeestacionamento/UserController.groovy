@@ -12,14 +12,14 @@ class UserController {
 
     def reminder(User user) {
         def booking = Reserva.findByUsuario(user)
-        def spot = booking.vaga
-        assert spot.numero
 
         if (booking){
-            flash.message = "O usuário estacionou na vaga ${spot.numero}"
+            flash.message = "O usuário estacionou na vaga ${booking.vaga.numero} do tipo ${booking.vaga.preferenceType} no setor ${booking.vaga.setor}"
         } else {
             flash.message = "O usuário não estacionou em nenhuma vaga"
         }
+
+        redirect(controller: "home", action: "index")
     }
 
     def show(User userInstance) {

@@ -97,9 +97,8 @@ When(~/^eu seleciono a opção de lembrar vaga$/) { ->
     assert page.reminded() != null
 }
 Then(~/^eu vejo uma mensagem informando vaga "([^"]*)" tipo "([^"]*)" no setor "([^"]*)"$/) { String spot, String type, String sector ->
-    assert page.readFlashMessage() != null
-//    assert page.message(spot)
+    assert page.message(spot, type, sector)
 }
 Then(~/^eu vejo uma mensagem informando que não foi feita uma reserva$/) { ->
-    assert page.readFlashMessage() != null
+    assert page.message()
 }

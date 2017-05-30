@@ -9,7 +9,7 @@
         <div class="nav" role="navigation">
             <ul>
                 <li><a class="home" id = "logout" href="/SistemaDeVagasDeEstacionamento/">Logout</a></li>
-                <li><a class="reminded" controller="user" action="reminder" id="${userInstance.id}">Reminded</a></li>
+                <li><g:link class="reminded" controller="user" name="reminder" action="reminder" id="${userInstance.id}"><g:message code="default.home.reminder"/></g:link></li>
             </ul>
         </div>
         <g:if test="${flash.message}">
@@ -21,7 +21,7 @@
             <h4>Olá, ${userInstance.firstName}</h4>
             <br>
             <br> Escolha uma das opções:
-        <g:link controller="vaga" action="index">Fazer login</g:link>
+        <g:link controller="vaga" action="index"> Lista de Vagas</g:link>
         </div>
     </body>
 </html>
