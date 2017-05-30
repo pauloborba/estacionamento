@@ -46,6 +46,8 @@ class VagaController {
             vaga.save(flush:true)
         }
 
+        redirect(action: "show", id: vaga.id)
+
     }
 
     def index(Integer max) {

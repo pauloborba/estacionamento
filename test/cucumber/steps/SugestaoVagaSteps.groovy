@@ -20,10 +20,16 @@ static Vaga sugestaoVaga (User usuario) {
     return vaga
 }
 
+static User acharUser (String username) {
+    def usuario = User.findByUsername(username)
+    return usuario
+}
+
 Given(~/^o sistema tem o usuario "([^"]*)" armazenado com preferencia pelo setor "([^"]*)" e tipo de vaga "([^"]*)"$/) { String usuario, String setor, String vaga ->
     AuthHelper.instance.signup(usuario, setor, vaga)
-    def user = User.findByUsername(usuario)
-    assert user != null
+    assert acharUser(usuario) != null
+   // def user = User.findByUsername(usuario)
+    //assert user != null
 }
 And(~/^eu estou logado no sistema como "([^"]*)"$/) { String usuario ->
     AuthHelper.instance.login(usuario)
@@ -38,11 +44,11 @@ And(~/^existe a vaga "([^"]*)" no setor "([^"]*)" do tipo "([^"]*)" disponivel$/
     assert !vaga.ocupada
 }
 When(~/^o usuario "([^"]*)" solicita a sugestao de vaga$/) { String usuario ->
-    def user = User.findByUsername(usuario)
+    def user = acharUser(usuario)
     assert user
     sugestaoVaga(user)
 }
 Then(~/^o sistema sugere a vaga "([^"]*)" para reserva$/) { String numeroVaga ->
-    def usuario = User.findByUsername(AuthHelper.instance.currentUsername)
+    def usuario = acharUser(AuthHelper.instance.currentUsername)
     assert sugestaoVaga(usuario) == Vaga.findByNumero(numeroVaga)
 }
