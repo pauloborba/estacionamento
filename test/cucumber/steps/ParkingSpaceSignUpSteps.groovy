@@ -14,7 +14,7 @@ Given(~/^o sistema não tem o usuário "([^"]*)" armazenado$/) { String username
     assert user == null
 }
 When(~/^o usuário tenta se cadastrar com usuário "([^"]*)" com preferencia no setor "([^"]*)"$/) { String username, String sector ->
-    AuthHelper.instance.signup(username, sector, false)
+    AuthHelper.instance.signup(username, sector, "Normal")
 }
 
 Then(~/^o sistema armazena o usúario "([^"]*)"$/) { String username ->
@@ -22,7 +22,7 @@ Then(~/^o sistema armazena o usúario "([^"]*)"$/) { String username ->
     assert currentUser != null
 }
 Given(~/^o sistema tem o usuário "([^"]*)" armazenado$/) { String username ->
-    AuthHelper.instance.signup(username, "CCEN", false)
+    AuthHelper.instance.signup(username, "CCEN", "Normal")
     def currentUser = User.findByUsername(username)
     assert currentUser != null
 }
@@ -38,14 +38,14 @@ Given(~/^eu estou na página de cadastro$/) { ->
     waitFor { at SignUpPage }
 }
 When(~/^eu tento me cadastrar com usuário "([^"]*)" e preferencia no setor "([^"]*)"$/) { String username, String sector ->
-    page.proceed(username, sector, false)
+    page.proceed(username, sector, "Normal")
 }
 Then(~/^eu sou redirecionado para o sistema$/) { ->
     waitFor { at HomePage }
 }
 Given(~/^Eu tenho um cadastro no sistema com o usuário "([^"]*)"$/) { String username ->
     waitFor { to SignUpPage }
-    page.proceed(username, "CIn", false)
+    page.proceed(username, "CIn", "Normal")
 }
 Then(~/^eu vejo uma mensagem de erro$/) { ->
     assert page.readFlashMessage() != null

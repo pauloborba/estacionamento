@@ -10,12 +10,12 @@ class SignUpPage extends Page {
     }
 
     //#if($ParkingSpaceBooking)
-    def proceed(String username, String preferredSector, boolean preferential) {
+    def proceed(String username, String preferredSector, String preferential) {
         $("input[name='username']").value(username)
         $("input[name='firstName']").value("Primeiro nome")
         $("input[name='lastName']").value("Último nome")
         $("select[name='preferredSector']").value(preferredSector)
-        $("input[name='preferential']").value(preferential)
+        $("input[name='preferentialType']").value(preferential)
         $("input[name='signUp']").click()
     }
     //#end
