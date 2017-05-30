@@ -24,7 +24,6 @@ Feature: Sugestão de Vaga
   Scenario: Sem Vagas Disponiveis no Setor de Preferencia e sem Necessidade Especial
     Given o sistema tem o usuario "Paulo" armazenado com preferencia pelo setor "Cin" e tipo de vaga "Normal"
     And eu estou logado no sistema como "Paulo"
-    And existe a vaga "1" no setor "CCEN" do tipo "Normal"
+    And existe a vaga "1" no setor "CCEN" do tipo "Normal" disponivel
     When o usuario "Paulo" solicita a sugestao de vaga
-    Then o sistema informa que não possui vaga no setor de preferência
-    And o sistema sugere a vaga "1" para reserva
+    Then o sistema sugere a vaga "1" para reserva
