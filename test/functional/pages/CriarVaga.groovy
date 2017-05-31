@@ -8,7 +8,7 @@ class CriarVaga extends Page {
     static url = 'vaga/create'
 
     static at = {
-       title ==~ /Create Vaga/
+         title ==~ /Create Vaga/
     }
 
     boolean criarVaga(String numeroVaga, String setorVaga, String tipoVaga){

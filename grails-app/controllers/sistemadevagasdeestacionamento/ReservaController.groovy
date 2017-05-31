@@ -10,7 +10,6 @@ class ReservaController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Reserva.list(params), model:[reservaInstanceCount: Reserva.count()]
