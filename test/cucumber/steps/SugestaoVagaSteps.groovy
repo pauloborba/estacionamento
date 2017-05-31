@@ -1,35 +1,20 @@
 package steps
 
 import cucumber.api.PendingException
+import pages.CriarVaga
+import pages.ListaDeVagas
+import pages.SignUpPage
 import sistemadevagasdeestacionamento.AuthHelper
 import sistemadevagasdeestacionamento.User
-import sistemadevagasdeestacionamento.UserController
 import sistemadevagasdeestacionamento.Vaga
-import sistemadevagasdeestacionamento.VagaController
 
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
-static Vaga sugestaoVaga (User usuario) {
-    def setor = usuario.preferredSector
-    def tipo = usuario.preferenceType
-    def vaga = Vaga.findBySetorAndPreferenceTypeAndOcupada(setor,tipo,false)
-    if( vaga == null) {
-        vaga = Vaga.findByOcupada(false)
-    }
-    return vaga
-}
-
-static User acharUser (String username) {
-    def usuario = User.findByUsername(username)
-    return usuario
-}
 
 Given(~/^o sistema tem o usuario "([^"]*)" armazenado com preferencia pelo setor "([^"]*)" e tipo de vaga "([^"]*)"$/) { String usuario, String setor, String vaga ->
     AuthHelper.instance.signup(usuario, setor, vaga)
-    assert acharUser(usuario) != null
-   // def user = User.findByUsername(usuario)
-    //assert user != null
+    assert User.findByUsername(usuario) != null
 }
 And(~/^eu estou logado no sistema como "([^"]*)"$/) { String usuario ->
     AuthHelper.instance.login(usuario)
@@ -44,11 +29,39 @@ And(~/^existe a vaga "([^"]*)" no setor "([^"]*)" do tipo "([^"]*)" disponivel$/
     assert !vaga.ocupada
 }
 When(~/^o usuario "([^"]*)" solicita a sugestao de vaga$/) { String usuario ->
-    def user = acharUser(usuario)
+    def user = User.findByUsername(usuario)
     assert user
-    sugestaoVaga(user)
+    Vaga.sugestaoVaga(user)
 }
 Then(~/^o sistema sugere a vaga "([^"]*)" para reserva$/) { String numeroVaga ->
-    def usuario = acharUser(AuthHelper.instance.currentUsername)
-    assert sugestaoVaga(usuario) == Vaga.findByNumero(numeroVaga)
+    def usuario = User.findByUsername(AuthHelper.instance.currentUsername)
+    assert Vaga.sugestaoVaga(usuario) == Vaga.findByNumero(numeroVaga)
+}
+Given(~/^estou logado no sistema como "([^"]*)", com preferencia pelo setor "([^"]*)" e tipo de vaga "([^"]*)"$/) { String login, String setor, String tipo ->
+    to SignUpPage
+    at SignUpPage
+    page.proceed(login,setor,tipo)
+
+}
+And(~/^eu crio a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)"$/) { String numero, String setor, String tipo ->
+    to CriarVaga
+    at CriarVaga
+    page.criarVaga(numero,setor,tipo)
+}
+And(~/^estou na pagina de listagem de vagas/) { ->
+    to ListaDeVagas
+    at ListaDeVagas
+}
+And(~/^a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)" aparece como disponivel$/) { String numero, String setor, String tipo ->
+    to ListaDeVagas
+    at ListaDeVagas
+    page.vagaLimpa(numero,setor,tipo)
+
+}
+When(~/^eu seleciono a opção de sugestão de vaga$/) { ->
+    assert page.sugest() != null
+
+}
+Then(~/^eu vejo uma mensagem informando a vaga "([^"]*)" do tipo "([^"]*)" no setor "([^"]*)"$/) { String numero, String tipo, String setor ->
+    assert page.readFlashMessage() != null
 }

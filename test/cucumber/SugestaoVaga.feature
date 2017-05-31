@@ -19,4 +19,22 @@ Feature: Sugestão de Vaga
     And existe a vaga "V2" no setor "CIn" do tipo "Normal" disponivel
     When o usuario "Matheus" solicita a sugestao de vaga
     Then o sistema sugere a vaga "V2" para reserva
+
+
+  Scenario: Sugerir Vaga para Usuario com Necessidade Especial gui
+    Given estou logado no sistema como "mlrbc", com preferencia pelo setor "CIn" e tipo de vaga "Deficiente"
+    And eu crio a vaga "10" do setor "CIn" do tipo "Deficiente"
+    And eu crio a vaga "20" do setor "CCEN" do tipo "Deficiente"
+    And estou na pagina de listagem de vagas
+    When eu seleciono a opção de sugestão de vaga
+    Then eu vejo uma mensagem informando a vaga "10" do tipo "Deficiente" no setor "CIn"
+
+
+  Scenario: Sugerir Vaga para usuario sem vagas da preferencia gui
+    Given estou logado no sistema como "mlrb", com preferencia pelo setor "CIn" e tipo de vaga "Deficiente"
+    And eu crio a vaga "11" do setor "CIn" do tipo "Normal"
+    And eu crio a vaga "12" do setor "CCEN" do tipo "Deficiente"
+    And estou na pagina de listagem de vagas
+    When eu seleciono a opção de sugestão de vaga
+    Then eu vejo uma mensagem informando a vaga "11" do tipo "Normal" no setor "CIn"
  
