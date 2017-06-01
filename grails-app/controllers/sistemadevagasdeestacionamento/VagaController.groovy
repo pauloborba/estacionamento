@@ -12,7 +12,7 @@ class VagaController {
     static allowedMethods = [update: "PUT"]
 
     def desocupar(Vaga vaga){
-        vaga.ocupada = false
+        vaga.setOcupada(false)
         vaga.reservas.last().setSaida(new Date())
         vaga.save(flush:true)
     }
@@ -25,27 +25,30 @@ class VagaController {
         reservasDoUsuario
     }
 
-    def reservar(Vaga vaga, User usuario) {
-        def logado = AuthHelper.instance.currentUsername
-
-        def reservasDoUsuario = varreReservas(vaga, logado)  //varre as reservas para ver se o usuario já ocupada alguma vaga
-
+    def acharEDesocuparVagaAntiga(def reservasDoUsuario){
         if(reservasDoUsuario != null) {
-           reservasDoUsuario.each { it ->
-                it.each { ita ->            //encontrada a vaga já ocupada para o usuario e a desocupa
+            reservasDoUsuario.each { it ->
+                it.each { ita ->
                     desocupar(ita.vaga)
                 }
             }
         }
+    }
+
+    def reservar(Vaga vaga, User usuario) {
+        def usuarioLogado = User.findByUsername(AuthHelper.instance.currentUsername)
+
+        def antigaOcupada = varreReservas(vaga, usuarioLogado.username) //varre as reservas para ver se o usuario já ocupa alguma vaga
+
+        acharEDesocuparVagaAntiga(antigaOcupada)  //encontra a vaga ocupada pelo usuario logado e a desocupa
 
         if(!vaga.ocupada){
-            vaga.ocupada = true
-            User testeUser = User.findByUsername(logado)
-            def reserva = new Reserva(usuario: testeUser, vaga: vaga, entrada: new Date())
+            vaga.setOcupada(true)
+            def reserva = new Reserva(usuario: usuarioLogado, vaga: vaga, entrada: new Date())
             vaga.reservas.add(reserva)
             vaga.save(flush:true)
         }
-
+        redirect(action: "show", id: vaga.id)
     }
 
     def index(Integer max) {
@@ -72,31 +75,26 @@ class VagaController {
         redirect(action: "show", id: vagaInstance.id)
     }
     @Transactional
-  /*  def save(Vaga vagaInstance) {
-
-        if (vagaInstance == null) {
-
-            vagaInstance = new Vaga(params)
-            notFound()
-            return
-        }
-
-        if (vagaInstance.hasErrors()) {
-            respond vagaInstance.errors, view:'create'
-            return
-        }
-
-        vagaInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'vaga.label', default: 'Vaga'), vagaInstance.id])
-                redirect vagaInstance
-            }
-            '*' { respond vagaInstance, [status: CREATED] }
-        }
-    }
-*/
+    /*  def save(Vaga vagaInstance) {
+          if (vagaInstance == null) {
+              vagaInstance = new Vaga(params)
+              notFound()
+              return
+          }
+          if (vagaInstance.hasErrors()) {
+              respond vagaInstance.errors, view:'create'
+              return
+          }
+          vagaInstance.save flush:true
+          request.withFormat {
+              form multipartForm {
+                  flash.message = message(code: 'default.created.message', args: [message(code: 'vaga.label', default: 'Vaga'), vagaInstance.id])
+                  redirect vagaInstance
+              }
+              '*' { respond vagaInstance, [status: CREATED] }
+          }
+      }
+  */
     def edit(Vaga vagaInstance) {
         respond vagaInstance
     }
