@@ -14,19 +14,19 @@ import sistemadevagasdeestacionamento.VagaController
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
-Given(~/^O sistema tem o usuario "([^"]*)" armazenado$/) { String username ->
-    AuthHelper.instance.signup(username, "CCEN", "Normal")
-    def currentUser = User.findByUsername(username)
-    assert currentUser != null
-}
-
-And(~/^eu estou logado no sistema como "([^"]*)"$/) { String login ->
-    to SignUpPage
-    at SignUpPage
-    AuthHelper.instance.login(login)
-    page.proceed(login, "CIn", "Normal")
-    assert AuthHelper.instance.currentUsername == login
-}
+//Given(~/^O sistema tem o usuario "([^"]*)" armazenado$/) { String username ->
+//    AuthHelper.instance.signup(username, "CCEN", "Normal")
+//    def currentUser = User.findByUsername(username)
+//    assert currentUser != null
+//}
+//
+//And(~/^eu estou logado no sistema como "([^"]*)"$/) { String login ->
+//    to SignUpPage
+//    at SignUpPage
+//    AuthHelper.instance.login(login)
+//    page.proceed(login, "CIn", "Normal")
+//    assert AuthHelper.instance.currentUsername == login
+//}
 And(~/^existe a vaga "([^"]*)" no setor "([^"]*)" do tipo "([^"]*)"$/) { String numero, String setor, String tipo ->
     ReservaTrocaDeVagaTestDataAndOperations.criarVaga(numero, setor, tipo)
 
