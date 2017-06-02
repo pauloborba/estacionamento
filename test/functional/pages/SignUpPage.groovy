@@ -15,7 +15,7 @@ class SignUpPage extends Page {
         $("input[name='firstName']").value("Primeiro nome")
         $("input[name='lastName']").value("Último nome")
         $("select[name='preferredSector']").value(preferredSector)
-        $("input[name='preferentialType']").value(preferential)
+        $("input[name='preferenceType']").value(preferential)
         $("input[name='signUp']").click()
     }
     //#end

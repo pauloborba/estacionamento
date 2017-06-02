@@ -34,8 +34,8 @@ Then(~/^o sistema não armazena o usúario "([^"]*)" de preferencia no setor "([
 //gui
 
 Given(~/^eu estou na página de cadastro$/) { ->
-    waitFor { to SignUpPage }
-    waitFor { at SignUpPage }
+    to SignUpPage
+    at SignUpPage
 }
 When(~/^eu tento me cadastrar com usuário "([^"]*)" e preferencia no setor "([^"]*)"$/) { String username, String sector ->
     page.proceed(username, sector, "Normal")

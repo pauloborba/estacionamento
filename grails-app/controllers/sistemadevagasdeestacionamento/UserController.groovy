@@ -10,6 +10,18 @@ class UserController {
         respond User.list(params), model:[userInstanceCount: User.count()]
     }
 
+    def reminder(User user) {
+        def booking = Reserva.findByUsuario(user)
+
+        if (booking){
+            flash.message = "O usuário estacionou na vaga ${booking.vaga.numero} do tipo ${booking.vaga.preferenceType} no setor ${booking.vaga.setor}"
+        } else {
+            flash.message = "O usuário não estacionou em nenhuma vaga"
+        }
+
+        redirect(controller: "home", action: "index")
+    }
+
     def sugest(User usuario) {
         def setor = usuario.getPreferredSector()
         def tipo = usuario.getPreferenceType()
