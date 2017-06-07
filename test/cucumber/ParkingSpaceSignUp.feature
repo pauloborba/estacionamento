@@ -2,6 +2,7 @@ Feature: Cadastro no sistema
   As a system user
   I want to sign up
   So that I can book a Parking Space
+
 #@ignore
 Scenario: Cadastrar um usuário
   Given o sistema não tem o usuário "jprm" armazenado
