@@ -13,7 +13,6 @@ this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
 
-
 Given(~/^o sistema tem o usuario "([^"]*)" armazenado com preferencia pelo setor "([^"]*)" e tipo de vaga "([^"]*)"$/) { String usuario, String setor, String vaga ->
     AuthHelper.instance.signup(usuario, setor, vaga)
     assert User.findByUsername(usuario) != null
@@ -59,8 +58,4 @@ When(~/^eu seleciono a opção de sugestão de vaga$/) { ->
 }
 Then(~/^eu vejo uma mensagem informando a vaga "([^"]*)" do tipo "([^"]*)" no setor "([^"]*)"$/) { String numero, String tipo, String setor ->
     assert page.readFlashMessage() != null
-}
-Given(~/^o sistema tem o usuario "([^"]*)" armazenado com preferencia pelo setor "([^"]*)" e tipo de vaga "([^"]*)"$/) { String arg1, String arg2, String arg3 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
 }
