@@ -4,7 +4,7 @@ I want to reservar e trocar de vagas
 So that eu possa estacionar na vaga reservada
 @ignore
 Scenario: Troca de vaga
-Given O sistema tem o usuario "Henrique" armazenado
+Given o sistema tem o usuário "Henrique" armazenado
 And estou logado no sistema como "Henrique"
 And existe a vaga "1" no setor "CIn" do tipo "Normal"
 And existe a vaga "2" no setor "CCEN" do tipo "Normal"
@@ -15,7 +15,7 @@ Then o sistema reserva a vaga "2" para o usuário "Henrique"
 And a vaga "1" do setor "CIn" está disponível
 @ignore
 Scenario: Fazer a reserva de uma vaga
-Given O sistema tem o usuario "Gabriel" armazenado
+Given o sistema tem o usuário "Gabriel" armazenado
 And estou logado no sistema como "Gabriel"
 And existe a vaga "3" no setor "CIn" do tipo "Normal"
 And a vaga "3" do setor "CIn" está disponível
