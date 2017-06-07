@@ -2,7 +2,7 @@ Feature: Reserva e Troca de vagas
   As a usuario do sistema
   I want to reservar e trocar de vagas
   So that eu possa estacionar na vaga reservada
-#  @ignore
+  @ignore
   Scenario: Troca de vaga
     Given o sistema tem o usuário "Henrique" armazenado
     And estou logado no sistema como "Henrique"
@@ -13,7 +13,7 @@ Feature: Reserva e Troca de vagas
     When o usuario "Henrique" tenta reservar a vaga "2" do setor "CCEN"
     Then o sistema reserva a vaga "2" para o usuário "Henrique"
     And a vaga "1" do setor "CIn" está disponível
-#  @ignore
+  @ignore
   Scenario: Fazer a reserva de uma vaga
     Given o sistema tem o usuário "Gabriel" armazenado
     And estou logado no sistema como "Gabriel"

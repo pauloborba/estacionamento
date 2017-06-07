@@ -9,14 +9,14 @@ class HomePage extends Page {
         title ==~ "Home"
     }
 
-    def reminded(){
+    def reminderClick(){
         $(".reminded").click()
     }
-    def message(String spot, String type, String sector){
+    def checkReminder(String spot, String type, String sector){
         $("div", class: "message").text() == ("O usuário estacionou na vaga ${spot} do tipo ${type} no setor ${sector}" as String)
     }
 
-    def message(){ // quando o usuario não reservar e clicar no lembrete
+    def checkReminder(){
         $("div", class: "message").text() == ("O usuário não estacionou em nenhuma vaga")
     }
 

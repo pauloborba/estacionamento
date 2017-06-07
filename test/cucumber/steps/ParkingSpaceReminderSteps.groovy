@@ -95,11 +95,11 @@ And(~/^eu não tenho nenhuma reserva no sistema$/) { ->
     Reserva.each { assert it.newInstance().usuario != currentUser    }
 }
 When(~/^eu seleciono a opção de lembrar vaga$/) { ->
-    assert page.reminded() != null
+    assert page.reminderClick() != null
 }
 Then(~/^eu vejo uma mensagem informando vaga "([^"]*)" tipo "([^"]*)" no setor "([^"]*)"$/) { String spot, String type, String sector ->
-    assert page.message(spot, type, sector)
+    assert page.checkReminder(spot, type, sector)
 }
 Then(~/^eu vejo uma mensagem informando que não foi feita uma reserva$/) { ->
-    assert page.message()
+    assert page.checkReminder()
 }
