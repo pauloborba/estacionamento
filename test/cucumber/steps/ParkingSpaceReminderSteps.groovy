@@ -47,13 +47,12 @@ When(~/^o usuário "([^"]*)" pedir um lembrete de vaga$/) { String username ->
 }
 Then(~/^o sistema informa a vaga "([^"]*)" tipo "([^"]*)" do setor "([^"]*)" para o usuário "([^"]*)"$/) { String spot, String type, String sector, String username ->
     Vaga currentSpot = Vaga.findByNumero(spot)
-    assert currentSpot
+    if(currentSpot) {
+        assert currentSpot.preferenceType == type
+        assert currentSpot.setor == sector
+    }
     def currentUser = User.findByUsername(username)
-    assert currentUser
-    ReservaTrocaDeVagaTestDataAndOperations.criarVaga(spot, sector, type)
-    ReservaTrocaDeVagaTestDataAndOperations.reservarVaga(currentSpot, currentUser)
-
-    Reserva.findByUsuario(currentUser)
+    assert Reserva.findByUsuario(currentUser)
 }
 
 Then(~/^o sistema informa para o usuário "([^"]*)" que não foi feita nenhuma reserva$/) { String username ->
