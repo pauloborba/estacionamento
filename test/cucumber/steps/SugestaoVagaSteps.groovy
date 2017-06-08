@@ -33,7 +33,7 @@ When(~/^o usuario "([^"]*)" solicita a sugestao de vaga$/) { String usuario ->
     def user = User.findByUsername(usuario)
     assert user
     def controler = new UserController ()
-    controler.sugestaoPreferencia(user)
+    controler.sugest(user)
 }
 Then(~/^o sistema sugere a vaga "([^"]*)" para reserva$/) { String numeroVaga ->
     def usuario = User.findByUsername(AuthHelper.instance.currentUsername)

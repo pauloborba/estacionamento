@@ -22,7 +22,7 @@ class UserController {
         redirect(controller: "home", action: "index")
     }
 
-    def sugestaoPreferencia(User usuario) {
+    def sugest(User usuario) {
         def setor = usuario.getPreferredSector()
         def tipo = usuario.getPreferenceType()
         def vaga = Vaga.findBySetorAndPreferenceTypeAndOcupada(setor,tipo,false)
