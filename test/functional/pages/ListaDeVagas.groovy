@@ -30,6 +30,16 @@ class ListaDeVagas extends Page {
         assert (encontrada && ocupada)
     }
 
+    boolean vagaManutencao(String spot, String setorVaga, String tipoVaga){
+        InternationalizationHelper helper =  InternationalizationHelper.instance
+        String temp = helper.getMessage("default.boolean.true")
+
+        boolean encontrada = acharVaga(spot, setorVaga, tipoVaga)
+        boolean ocupada = $("tr").has("td",text: temp)
+        boolean manutencao = $("tr").has("td",text: temp)
+        assert (encontrada && ocupada && manutencao)
+    }
+
     boolean vagaLimpa(String numeroVaga, String setorVaga, String tipoVaga){
         InternationalizationHelper helper =  InternationalizationHelper.instance
         String temp = helper.getMessage("default.boolean.false")

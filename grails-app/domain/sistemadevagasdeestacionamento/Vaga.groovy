@@ -6,6 +6,7 @@ class Vaga {
     static hasMany = [reservas:Reserva]
     String preferenceType
     boolean ocupada
+    boolean maintenance
 
     Vaga(){
         reservas = []
@@ -16,6 +17,7 @@ class Vaga {
         setor inList: ["CIn", "CCEN", "Area II"]
         preferenceType inList: ["Normal", "Deficiente", "Idoso"]
         ocupada nullable: false
+        maintenance nullable: false
     }
 
     static Vaga sugestaoVaga (User usuario) {

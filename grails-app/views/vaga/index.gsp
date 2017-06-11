@@ -32,6 +32,8 @@
 
 			<g:sortableColumn property="ocupada" title="${message(code: 'vaga.ocupada.label', default: 'Ocupada')}" />
 
+			<g:sortableColumn property="maintenance" title="${message(code: 'vaga.maintenance.label', default: 'Manutenção')}" />
+
 			<g:sortableColumn property="usuario" title="${message(code: 'vaga.reservas.usuario.label', default: 'Usuario')}"/>
 
 			<g:sortableColumn property="saida" title="${message(code: 'vaga.reservas.saida', default: 'Saida')}"/>
@@ -50,6 +52,8 @@
 				<td>${fieldValue(bean: vagaInstance, field: "preferenceType")}</td>
 
 				<td><g:formatBoolean boolean="${vagaInstance.ocupada}" /></td>
+
+				<td><g:formatBoolean boolean="${vagaInstance.maintenance}" /></td>
 
 				<td>${fieldValue(bean: vagaInstance, field: "reservas.usuario.username")}</td>
 
