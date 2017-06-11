@@ -9,7 +9,7 @@ import sistemadevagasdeestacionamento.User
 import sistemadevagasdeestacionamento.Vaga
 import sistemadevagasdeestacionamento.VagaController
 
-//import steps.ReservaTrocaDeVagaTestDataAndOperations
+import steps.ReservaTrocaDeVagaTestDataAndOperations
 
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
@@ -30,9 +30,9 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 And(~/^existe a vaga "([^"]*)" no setor "([^"]*)" do tipo "([^"]*)"$/) { String numero, String setor, String tipo ->
     ReservaTrocaDeVagaTestDataAndOperations.criarVaga(numero, setor, tipo)
 
-     def vaga = Vaga.findByNumero(numero)
-     assert vaga?.getSetor() == setor
-     assert vaga?.getPreferenceType() == tipo
+    def vaga = Vaga.findByNumero(numero)
+    assert vaga?.getSetor() == setor
+    assert vaga?.getPreferenceType() == tipo
 }
 And(~/^a vaga "([^"]*)" do setor "([^"]*)" está disponível$/) { String numero, String setor ->
     Vaga criada = Vaga.findByNumero(numero)
@@ -42,7 +42,7 @@ And(~/^a vaga "([^"]*)" do setor "([^"]*)" está disponível$/) { String numero,
 }
 
 When(~/^o usuario "([^"]*)" tenta reservar a vaga "([^"]*)" do setor "([^"]*)"$/) { String login, String numero, String setor ->
-     ReservaTrocaDeVagaTestDataAndOperations.checarReservaVaga(numero, setor, login)
+    ReservaTrocaDeVagaTestDataAndOperations.checarReservaVaga(numero, setor, login)
 }
 
 Then(~/^o sistema reserva a vaga "([^"]*)" para o usuário "([^"]*)"$/) { String numero, String login ->
@@ -69,13 +69,11 @@ And(~/^a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)" aparece como diponi
 }
 
 Then(~/^Eu vejo uma mensagem de confirmação$/) { ->
-   assert page.readFlashMessage() != null
+    assert page.readFlashMessage() != null
 }
 
 And(~/^a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)" aparece como reservada$/) { String numeroVaga, String setorVaga, String tipoVaga ->
-    to ListaDeVagas
-    at ListaDeVagas
-    page.vagaOcupada(numeroVaga, setorVaga, tipoVaga)
+    page.checarOcupada()
 }
 
 When(~/^eu seleciono a opção de reservar a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)"$/) { String numero, String setor, String tipo ->

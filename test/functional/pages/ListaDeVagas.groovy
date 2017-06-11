@@ -1,12 +1,15 @@
 package pages
 
 import geb.Page
+import steps.InternationalizationHelper
 
 class ListaDeVagas extends Page {
     static url = 'vaga/index'
 
     static at = {
-        title ==~ /Vaga List/
+        InternationalizationHelper helper = InternationalizationHelper.instance
+        String pageTitle = helper.getMessage("default.list.label", "Vaga")
+        title ==~ pageTitle
     }
 
     boolean acharVaga(String vaga, String setor, String tipo){
@@ -19,14 +22,20 @@ class ListaDeVagas extends Page {
     }
 
     boolean vagaOcupada(String numeroVaga, String setorVaga, String tipoVaga){
+        InternationalizationHelper helper =  InternationalizationHelper.instance
+        String temp = helper.getMessage("default.boolean.true")
+
         boolean encontrada = acharVaga(numeroVaga, setorVaga, tipoVaga)
-        boolean ocupada = $("tr").has("td",text: "True")
+        boolean ocupada = $("tr").has("td",text: temp)
         assert (encontrada && ocupada)
     }
 
     boolean vagaLimpa(String numeroVaga, String setorVaga, String tipoVaga){
+        InternationalizationHelper helper =  InternationalizationHelper.instance
+        String temp = helper.getMessage("default.boolean.false")
+
         boolean encontrada = acharVaga(numeroVaga, setorVaga, tipoVaga)
-        boolean naoOcupada = $("tr").has("td",text: "False")
+        boolean naoOcupada = $("tr").has("td",text: temp)
         assert (encontrada && naoOcupada)
     }
 
