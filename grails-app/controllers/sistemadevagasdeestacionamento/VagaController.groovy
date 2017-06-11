@@ -11,42 +11,52 @@ class VagaController {
 
     static allowedMethods = [update: "PUT"]
 
-    def desocupar(Vaga vaga){
-        vaga.setOcupada(false)
-        vaga.reservas.last().setSaida(new Date())
-        vaga.save(flush:true)
-    }
-    def varreReservas(Vaga, String usuario){
-        def reservasDoUsuario = Vaga.all.reservas.each {ita->
+  /*  def varreReservas(String usuario){
+       def reservasDoUsuario = Vaga.all.reservas.each {ita->
             ita.each { ite ->
                 ite.usuario.username == usuario && ite.saida != null
             }
         }
         reservasDoUsuario
+    }*/
+
+    def varreReservas(String usuario){
+         def reservasDoUsuario = Vaga.all.reservas.each {
+                it.findAll { ite ->
+                    ite.usuario.username == usuario && ite.saida != null
+                }
+         }
+        reservasDoUsuario
     }
 
-    def acharEDesocuparVagaAntiga(def reservasDoUsuario){
+    def acharEDesocuparVagaAntiga(def reservasDoUsuario, User usuario){
         if(reservasDoUsuario != null) {
             reservasDoUsuario.each { it ->
                 it.each { ita ->
-                    desocupar(ita.vaga)
+                    if(ita.usuario == usuario) {
+                        ita.vaga.desocupar()
+                    }
                 }
             }
         }
     }
+   /* def acharEDesocuparVagaAntiga(def reservasDoUsuario, User usuario){
+        if(reservasDoUsuario != null){
+                reservasDoUsuario.each{
+                    it.vaga.desocupar()
+            }
+        }
+    }*/
 
     def reservar(Vaga vaga, User usuario) {
         def usuarioLogado = User.findByUsername(AuthHelper.instance.currentUsername)
 
-        def antigaOcupada = varreReservas(vaga, usuarioLogado.username) //varre as reservas para ver se o usuario já ocupa alguma vaga
+        def antigaOcupada = varreReservas(usuarioLogado.username) //varre as reservas para ver se o usuario já ocupa alguma vaga
 
-        acharEDesocuparVagaAntiga(antigaOcupada)  //encontra a vaga ocupada pelo usuario logado e a desocupa
+        acharEDesocuparVagaAntiga(antigaOcupada, usuarioLogado)  //encontra a vaga ocupada pelo usuario logado e a desocupa
 
         if(!vaga.ocupada){
-            vaga.setOcupada(true)
-            def reserva = new Reserva(usuario: usuarioLogado, vaga: vaga, entrada: new Date())
-            vaga.reservas.add(reserva)
-            vaga.save(flush:true)
+            vaga.ocupar(usuarioLogado)
         }
         redirect(action: "show", id: vaga.id)
     }

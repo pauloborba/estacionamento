@@ -22,6 +22,24 @@ class UserController {
         redirect(controller: "home", action: "index")
     }
 
+    def sugest(User usuario) {
+        def setor = usuario.getPreferredSector()
+        def tipo = usuario.getPreferenceType()
+        def vaga = Vaga.findBySetorAndPreferenceTypeAndOcupada(setor,tipo,false)
+        def vagaAux = Vaga.findByOcupada(false)
+        if ((vaga == null) && vagaAux == null) {
+            flash.message = "Não existem vagas disponíveis para reserva"
+        } else if (vaga == null){
+            this.mensagem(vagaAux)
+        } else {
+            this.mensagem(vaga)
+        }
+        redirect(controller: "vaga", action: "index")
+    }
+    def mensagem(Vaga vaga) {
+        flash.message = "É sugerido a vaga ${vaga.getNumero()} do tipo ${vaga.getPreferenceType()} no setor ${vaga.getSetor()} para reserva"
+    }
+
     def show(User userInstance) {
         respond userInstance
     }

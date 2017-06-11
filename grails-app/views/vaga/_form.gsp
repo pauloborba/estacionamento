@@ -30,7 +30,7 @@
 <div class="fieldcontain ${hasErrors(bean: vagaInstance, field: 'ocupada', 'error')} ">
 	<label for="ocupada">
 		<g:message code="vaga.ocupada.label" default="Ocupada" />
-		
+
 	</label>
 	<g:checkBox name="ocupada" value="${vagaInstance?.ocupada}" />
 
@@ -39,18 +39,17 @@
 <div class="fieldcontain ${hasErrors(bean: vagaInstance, field: 'reservas', 'error')} ">
 	<label for="reservas">
 		<g:message code="vaga.reservas.label" default="Reservas" />
-		
+
 	</label>
-	
-<ul class="one-to-many">
-<g:each in="${vagaInstance?.reservas?}" var="r">
-    <li><g:link controller="reserva" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></li>
-</g:each>
-<li class="add">
-<g:link controller="reserva" action="create" params="['vaga.id': vagaInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'reserva.label', default: 'Reserva')])}</g:link>
-</li>
-</ul>
+
+	<ul class="one-to-many">
+		<g:each in="${vagaInstance?.reservas?}" var="r">
+			<li><g:link controller="reserva" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></li>
+		</g:each>
+		<li class="add">
+			<g:link controller="reserva" action="create" params="['vaga.id': vagaInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'reserva.label', default: 'Reserva')])}</g:link>
+		</li>
+	</ul>
 
 
 </div>
-
