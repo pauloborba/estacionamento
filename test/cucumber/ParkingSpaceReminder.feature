@@ -32,5 +32,3 @@ Feature: Lembrete de vaga
     And eu não tenho nenhuma reserva no sistema
     When eu seleciono a opção de lembrar vaga
     Then eu vejo uma mensagem informando que não foi feita uma reserva
-
-

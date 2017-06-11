@@ -73,9 +73,7 @@ Then(~/^Eu vejo uma mensagem de confirmação$/) { ->
 }
 
 And(~/^a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)" aparece como reservada$/) { String numeroVaga, String setorVaga, String tipoVaga ->
-    to ListaDeVagas
-    at ListaDeVagas
-    page.vagaOcupada(numeroVaga, setorVaga, tipoVaga)
+    page.checarOcupada()
 }
 
 When(~/^eu seleciono a opção de reservar a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)"$/) { String numero, String setor, String tipo ->
