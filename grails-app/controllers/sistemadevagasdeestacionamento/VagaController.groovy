@@ -11,11 +11,15 @@ class VagaController {
 
     static allowedMethods = [update: "PUT"]
 
-    def desocuparTodasAposTempo(int tempo){       //falta alguns ajustes
-        if (tempo==null) tempo = 10000
-        Vaga.all.each {
-            desocuparAposTempo(it, tempo)
-       }
+    def desocuparTodasAposTempo(int tempo) {       //falta alguns ajustes
+        def usuario = AuthHelper.instance.currentUsername
+        if (usuario == "master") {
+            Vaga.all.each {
+                desocuparAposTempo(it, tempo)
+            }
+        }else{
+            flash.message = "O usuário não possui permissão para acessar essa funcionalidade"
+        }
         redirect(action: "index")
     }
 

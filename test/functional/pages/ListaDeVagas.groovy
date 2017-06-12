@@ -49,5 +49,4 @@ class ListaDeVagas extends Page {
     def desocuparReservasExpiradas(){
         $(".remover").click()
     }
-
 }

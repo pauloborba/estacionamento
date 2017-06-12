@@ -1,6 +1,7 @@
 package steps
 
 import cucumber.api.PendingException
+import pages.LoginPage
 import sistemadevagasdeestacionamento.Vaga
 import pages.ListaDeVagas
 import sistemadevagasdeestacionamento.VagaController
@@ -31,4 +32,12 @@ When(~/^eu seleciono a opção de remover todas as reservas que esgotaram o limi
     at ListaDeVagas
     sleep(tempo*1000)
     page.desocuparReservasExpiradas()
+}
+Then(~/^eu vejo uma mensagem informando que não tenho a permissão necessária para acessar$/) { ->
+    assert page.readFlashMessage() != null
+}
+And(~/^eu logo no sistema como usuario "([^"]*)"$/) { String login ->
+    to LoginPage
+    at LoginPage
+    page.login(login)
 }
