@@ -45,4 +45,9 @@ class ListaDeVagas extends Page {
             $("tr").find("td").has("a", text: "Reservar "+numeroVaga).click()
         }
     }
+
+    def desocuparReservasExpiradas(){
+        $(".remover").click()
+    }
+
 }

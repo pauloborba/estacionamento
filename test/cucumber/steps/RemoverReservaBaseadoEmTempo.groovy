@@ -22,16 +22,13 @@ Then(~/^a vaga "([^"]*)" do setor "([^"]*)" é desocupada$/) { String numero, St
     assert !vaga.ocupada
 }
 
-When(~/^O tempo limite de reserva de (\d+) segundos foi esgotado$/) { int tempo ->
-    sleep(tempo*1000)
-
-}
 When(~/^eu tento remover todas as reservas que esgotoram o limite de reserva de (\d+) segundos$/) { int tempo ->
     sleep(tempo*1000)
     ReservaTrocaDeVagaTestDataAndOperations.removerTodasReservas(tempo)
 }
-When(~/^eu seleciono a opção de remover todas as reservas que esgotaram o limite de tempo de reserva de (\d+) segundos$/) { int arg1 ->
+When(~/^eu seleciono a opção de remover todas as reservas que esgotaram o limite de tempo de reserva de (\d+) segundos$/) { int tempo ->
     to ListaDeVagas
     at ListaDeVagas
-    page.desocuparTodasVagas()
+    sleep(tempo*1000)
+    page.desocuparReservasExpiradas()
 }
