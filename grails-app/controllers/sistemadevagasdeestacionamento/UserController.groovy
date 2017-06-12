@@ -58,7 +58,6 @@ class UserController {
             this.sugest(User.findByUsername(usuario))
         } else {
             this.mensagem(retorno)
-            redirect(controller: "vaga", action: "index")
         }
 
     }
