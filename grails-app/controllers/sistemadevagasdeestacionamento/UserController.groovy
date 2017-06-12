@@ -44,10 +44,12 @@ class UserController {
         def controller = new VagaController()
         def vagas = controller.varreReservas(usuario)
         vagas.each { it ->
-            it.
+            it.find { ite ->
+                def vagaAux = Vaga.findByNumero(ite.vaga)
+                if (vagaAux.ocupada == false) return vagaAux
+            }
 
         }
-
     }
 
     def show(User userInstance) {
