@@ -30,9 +30,14 @@ class ReservaTrocaDeVagaTestDataAndOperations{
         }
     }
 
-    static removerReserva(tempo){
+    static removerReserva(Vaga vaga, int tempo){
         def controlador = new VagaController()
-        controlador.desocuparAposTempo(tempo)
+        controlador.desocuparAposTempo(vaga, tempo)
+        controlador.response.reset()
+    }
+    static removerTodasReservas(int tempo){
+        def controlador = new VagaController()
+        controlador.desocuparTodasAposTempo(tempo)
         controlador.response.reset()
     }
 

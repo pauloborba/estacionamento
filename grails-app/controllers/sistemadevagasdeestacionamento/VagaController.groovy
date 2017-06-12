@@ -11,14 +11,23 @@ class VagaController {
 
     static allowedMethods = [update: "PUT"]
 
-  /*  def varreReservas(String usuario){
-       def reservasDoUsuario = Vaga.all.reservas.each {ita->
-            ita.each { ite ->
-                ite.usuario.username == usuario && ite.saida != null
+    def desocuparTodasAposTempo(int tempo){       //falta alguns ajustes
+       Vaga.all.each {
+           desocuparAposTempo(it, tempo)
+       }
+        redirect(action: "index")
+    }
+
+
+    def desocuparAposTempo (Vaga vaga, int tempo){
+        def tempoAtual = new Date()
+        if(vaga.reservas.last() != null) {
+            def tempoDecorrido = tempoAtual.time - vaga.reservas.last().entrada.time
+            if (tempoDecorrido > tempo * 1000) {
+                vaga.desocupar()
             }
         }
-        reservasDoUsuario
-    }*/
+    }
 
     def varreReservas(String usuario){
          def reservasDoUsuario = Vaga.all.reservas.each {
