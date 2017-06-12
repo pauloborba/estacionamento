@@ -28,9 +28,11 @@ class Vaga {
         return vaga
     }
 
-    static Vaga sugestaoVagaHistorico (User usuario) {
+    static Vaga sugestaoVagaHistorico (String usuario) {
+        def retorno
+        def count = 0
         def controller = new VagaController()
-        def vagas = controller.varreReservas(usuario.username)
+        def vagas = controller.varreReservas(usuario)
         vagas.each {it ->
             it.find {ite ->
                 def vagaAux = Vaga.findByNumero(ite.vaga.numero)
