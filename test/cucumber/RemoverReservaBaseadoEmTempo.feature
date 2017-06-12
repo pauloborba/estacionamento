@@ -46,6 +46,3 @@ And estou na pagina de listagem de vagas
 And a vaga "1000" do setor "CIn" do tipo "Normal" está reservada
 When eu seleciono a opção de remover todas as reservas que esgotaram o limite de tempo de reserva de 10 segundos
 Then eu vejo uma mensagem informando que não tenho a permissão necessária para acessar
-
-
-
