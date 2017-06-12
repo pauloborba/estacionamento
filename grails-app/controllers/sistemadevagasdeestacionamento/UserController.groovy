@@ -54,8 +54,9 @@ class UserController {
                 }
             }
         }
+        def vagaLivre = Vaga.findByOcupada(false)
         if (count == 0){
-            this.sugest(User.findByUsername(usuario))
+            this.mensagem(vagaLivre)
         } else {
             this.mensagem(retorno)
         }
