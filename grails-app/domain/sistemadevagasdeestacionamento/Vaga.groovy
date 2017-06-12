@@ -32,6 +32,7 @@ class Vaga {
         def retorno
         def count = 0
         def controller = new VagaController()
+        def vagaLivre = Vaga.findByOcupada(false)
         def vagas = controller.varreReservas(usuario)
         vagas.each {it ->
             it.find {ite ->
@@ -43,7 +44,7 @@ class Vaga {
             }            
         }
         if(count == 0){
-            this.sugestaoVaga
+            return vagaLivre
         } else {
             return retorno
         }
