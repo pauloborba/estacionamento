@@ -22,7 +22,6 @@ Feature: Manutenção de vaga
   Scenario: Alerta de vaga indisponível web
     Given eu estou logado no sistema como "master"
     And estou na pagina de listagem de vagas
-
     And a vaga "76" do setor "CIn" do tipo "Normal" aparece como indiponível
     When eu seleciono a opção de reservar a vaga "76" do setor "CIn" do tipo "Normal"
     Then eu vejo uma mensagem informando que a vaga "76" tipo "Normal" do setor "CIn" está indisponível

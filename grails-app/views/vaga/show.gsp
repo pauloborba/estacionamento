@@ -58,6 +58,19 @@
 
 			</li>
 		</g:if>
+		<g:if test="${vagaInstance?.maintenance}">
+			<li class="fieldcontain">
+				<span id="maintenance-label" class="property-label"><g:message code="vaga.maintenance.label" default="Maintenance" /></span>
+
+				<span class="property-value" aria-labelledby="maintenance-label"><g:formatBoolean boolean="${vagaInstance?.maintenance}" /></span>
+
+			</li>
+
+
+		</g:if>
+
+		<td><g:link action="manutencao" id="${vagaInstance.id}"> Interditar </g:link> </td>
+
 
 		<g:if test="${vagaInstance?.reservas}">
 			<li class="fieldcontain">

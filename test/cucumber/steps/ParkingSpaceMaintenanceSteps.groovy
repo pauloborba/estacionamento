@@ -20,15 +20,16 @@ When(~/^o usuário "([^"]*)" tenta marcar a vaga "([^"]*)" tipo "([^"]*)" do set
 Then(~/^o sistema marca a vaga "([^"]*)" tipo "([^"]*)" do setor "([^"]*)" como indisponível$/) { String spot, String type, String sector ->
     Vaga currentSpot = Vaga.findByNumero(spot)
     if (currentSpot.ocupada){
-//        assert currentSpot.maintenance
+        assert currentSpot.maintenance
     }
-
 }
 
 And(~/^a vaga "([^"]*)" do setor "([^"]*)" está indisponível$/) { String spot, String sector ->
+    User currentUser = User.findByUsername("master")
     Vaga currentSpot = Vaga.findByNumero(spot)
+    MaintenanceTestDataAndOperations.interditarVaga(currentSpot, currentUser)
     if(currentSpot.getSetor() == sector) {
-        assert !currentSpot.maintenance
+        assert currentSpot.maintenance
     }
 }
 
@@ -40,8 +41,7 @@ Then(~/^o sistema informa que a vaga "([^"]*)" tipo "([^"]*)" do setor "([^"]*)"
 And(~/^a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)" aparece como indiponível$/) { String spot, String sector, String type ->
     to ListaDeVagas
     at ListaDeVagas
-//    page.vagaOcupada(spot, sector, type)
-    page.vagaManutencao(spot, sector, type)
+    page.checarManutencao()
 }
 Then(~/^eu vejo uma mensagem informando que a vaga "([^"]*)" tipo "([^"]*)" do setor "([^"]*)" está indisponível$/) { String spot, String type, String sector ->
     assert page.readFlashMessage() != null

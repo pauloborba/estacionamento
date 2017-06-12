@@ -11,8 +11,8 @@ class MaintenanceTestDataAndOperations {
 
     static interditarVaga(Vaga spot, User user){
         def controller = new VagaController()
+        spot.maintenance = true
         controller.reservar(spot, user)
-//        controller. manutençao FAZER
         controller.response.reset()
 
     }

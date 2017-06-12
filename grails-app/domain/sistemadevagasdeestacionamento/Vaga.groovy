@@ -37,6 +37,12 @@ class Vaga {
         this.save(flush:true)
     }
 
+    def interditar(User user){
+        if (!this.ocupada) { ocupar(user) } // caso não esteja reservada (ocupada)
+        this.setMaintenance(true)
+        this.save(flush: true)
+    }
+
     def desocupar(){
         this.setOcupada(false)
         this.reservas.last().setSaida(new Date())

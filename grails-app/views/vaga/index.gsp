@@ -61,6 +61,7 @@
 
                 <td><g:link action="reservar" id="${vagaInstance.id}">
                     Reservar ${fieldValue(bean: vagaInstance, field: "numero")} </g:link> </td>
+
             </tr>
         </g:each>
         </tbody>

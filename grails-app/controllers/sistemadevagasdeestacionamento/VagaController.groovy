@@ -61,6 +61,12 @@ class VagaController {
         redirect(action: "show", id: vaga.id)
     }
 
+    def manutencao(Vaga vaga) {
+        def usuarioLogado = User.findByUsername(AuthHelper.instance.currentUsername)
+        vaga.interditar(usuarioLogado)
+        redirect(action: "show", id: vaga.id)
+    }
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Vaga.list(params), model:[vagaInstanceCount: Vaga.count()]
