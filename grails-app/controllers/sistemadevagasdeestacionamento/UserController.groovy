@@ -40,6 +40,16 @@ class UserController {
         flash.message = "É sugerido a vaga ${vaga.getNumero()} do tipo ${vaga.getPreferenceType()} no setor ${vaga.getSetor()} para reserva"
     }
 
+    def sugestHistoric(String usuario) {
+        def controller = new VagaController()
+        def vagas = controller.varreReservas(usuario)
+        vagas.each { it ->
+            it.
+
+        }
+
+    }
+
     def show(User userInstance) {
         respond userInstance
     }
