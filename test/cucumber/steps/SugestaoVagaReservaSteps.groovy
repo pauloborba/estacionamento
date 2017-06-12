@@ -37,6 +37,5 @@ When(~/^eu seleciono a opção de sugestão de vaga baseadas no historico$/) { -
 
 }
 Then(~/^a vaga "([^"]*)" é sugerida para reserva$/) { String numeroVaga ->
-    def controller = new UserController()
-    assert controller.sugestHistoric(AuthHelper.instance.currentUsername) == Vaga.findByNumero(numeroVaga)
+    assert Vaga.sugestaoVagaHistorico(AuthHelper.instance.currentUsername) == Vaga.findByNumero(numeroVaga)
 }
