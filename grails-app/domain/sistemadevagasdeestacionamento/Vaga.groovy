@@ -29,7 +29,22 @@ class Vaga {
     }
 
     static Vaga sugestaoVagaHistorico (User usuario) {
-        
+        def controller = new VagaController()
+        def vagas = controller.varreReservas(usuario.username)
+        vagas.each {it ->
+            it.find {ite ->
+                def vagaAux = Vaga.findByNumero(ite.vaga.numero)
+                if ((!vagaAux.ocupada) && (count == 0)) {
+                    count = 1
+                    retorno = vagaAux
+                }
+            }            
+        }
+        if(count == 0){
+            this.sugestaoVaga
+        } else {
+            return retorno
+        }
     }
 
     def ocupar(User usuarioLogado){
