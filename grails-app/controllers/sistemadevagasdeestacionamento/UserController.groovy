@@ -43,13 +43,24 @@ class UserController {
     def sugestHistoric(String usuario) {
         def controller = new VagaController()
         def vagas = controller.varreReservas(usuario)
+        def count = 0
+        def retorno
         vagas.each { it ->
             it.find { ite ->
-                def vagaAux = Vaga.findByNumero(ite.vaga)
-                if (vagaAux.ocupada == false) return vagaAux
+                def vagaAux = Vaga.findByNumero(ite.vaga.numero)
+                if ((!vagaAux.ocupada) && (count == 0)) {
+                    count = 1
+                    retorno = vagaAux
+                }
             }
-
         }
+        if (count == 0){
+            this.sugest(User.findByUsername(usuario))
+        } else {
+            this.mensagem(retorno)
+            redirect(controller: "vaga", action: "index")
+        }
+
     }
 
     def show(User userInstance) {

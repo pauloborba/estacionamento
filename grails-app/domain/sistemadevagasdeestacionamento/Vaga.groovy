@@ -19,14 +19,18 @@ class Vaga {
     }
 
     static Vaga sugestaoVaga (User usuario) {
-                def setor = usuario.preferredSector
-                def tipo = usuario.preferenceType
-                def vaga = findBySetorAndPreferenceTypeAndOcupada(setor,tipo,false)
-                if( vaga == null) {
-                        vaga = findByOcupada(false)
-                    }
-                return vaga
+        def setor = usuario.preferredSector
+        def tipo = usuario.preferenceType
+        def vaga = findBySetorAndPreferenceTypeAndOcupada(setor,tipo,false)
+        if( vaga == null) {
+                vaga = findByOcupada(false)
             }
+        return vaga
+    }
+
+    static Vaga sugestaoVagaHistorico (User usuario) {
+        
+    }
 
     def ocupar(User usuarioLogado){
         this.setOcupada(true)

@@ -7,7 +7,6 @@ import sistemadevagasdeestacionamento.AuthHelper
 import sistemadevagasdeestacionamento.User
 import sistemadevagasdeestacionamento.UserController
 import sistemadevagasdeestacionamento.Vaga
-import sistemadevagasdeestacionamento.VagaController
 
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)

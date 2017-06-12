@@ -20,7 +20,7 @@ Feature: Sugestão de Vaga baseada no Historico
     And o usuario "Robson" não possui reservas anteriores
     When o usuario "Robson" solicita a sugestao de vaga baseada no historico
     Then a vaga "A1" é sugerida para reserva
-
+@ignore
   Scenario: Sugerir vaga para usuario que possui reservas anteriores gui
     Given estou logado no sistema como "mrs", com preferencia pelo setor "CIn" e tipo de vaga "Normal"
     And eu crio a vaga "B1" do setor "CIn" do tipo "Normal"
