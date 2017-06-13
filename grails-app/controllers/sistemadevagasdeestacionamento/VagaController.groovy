@@ -11,14 +11,30 @@ class VagaController {
 
     static allowedMethods = [update: "PUT"]
 
-  /*  def varreReservas(String usuario){
-       def reservasDoUsuario = Vaga.all.reservas.each {ita->
-            ita.each { ite ->
-                ite.usuario.username == usuario && ite.saida != null
+    def desocuparTodasAposTempo(int tempo) {       //falta alguns ajustes
+        def usuario = AuthHelper.instance.currentUsername
+        if (usuario == "master") {
+            Vaga.all.each {
+                desocuparAposTempo(it, tempo)
             }
+        }else{
+            flash.message = "O usuário não possui permissão para acessar essa funcionalidade"
         }
-        reservasDoUsuario
-    }*/
+        redirect(action: "index")
+    }
+
+
+    def desocuparAposTempo (Vaga vaga, int tempo){
+        def tempoAtual = new Date()
+         if (vaga.reservas != null && vaga.getOcupada()) {
+             def tempoDecorrido = tempoAtual.time - (vaga.reservas.last().entrada.time + (tempo * 1000))
+             if (tempoDecorrido >= 0) {
+                 vaga.desocupar()
+                 vaga.save(flush:true)
+             }
+         }
+    }
+
 
     def varreReservas(String usuario){
          def reservasDoUsuario = Vaga.all.reservas.each {
@@ -35,6 +51,7 @@ class VagaController {
                 it.each { ita ->
                     if(ita.usuario == usuario) {
                         ita.vaga.desocupar()
+                        ita.vaga.save(flush:true)
                     }
                 }
             }
@@ -57,6 +74,7 @@ class VagaController {
 
         if(!vaga.ocupada){
             vaga.ocupar(usuarioLogado)
+            vaga.save(flush:true)
         }
 
         if (vaga.maintenance) {

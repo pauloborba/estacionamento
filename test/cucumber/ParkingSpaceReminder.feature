@@ -18,7 +18,6 @@ Feature: Lembrete de vaga
     When o usuário "divino" pedir um lembrete de vaga
     Then o sistema informa para o usuário "divino" que não foi feita nenhuma reserva
 
-  #gui
   Scenario: Lembrete de vaga estacionada web
     Given eu estou logado no sistema como "allan"
     And eu estou na página principal

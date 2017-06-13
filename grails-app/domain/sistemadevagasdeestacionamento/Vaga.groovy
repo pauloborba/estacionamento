@@ -34,7 +34,6 @@ class Vaga {
         this.setOcupada(true)
         def reserva = new Reserva(usuario: usuarioLogado, vaga: this, entrada: new Date())
         this.reservas.add(reserva)
-        this.save(flush:true)
     }
 
     def interditar(User user){
@@ -51,7 +50,6 @@ class Vaga {
     def desocupar(){
         this.setOcupada(false)
         this.reservas.last().setSaida(new Date())
-        this.save(flush:true)
     }
 
 }
