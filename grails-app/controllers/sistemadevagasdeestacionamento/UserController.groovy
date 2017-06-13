@@ -44,7 +44,8 @@ class UserController {
         def controller = new VagaController()
         def vagas = controller.varreReservas(usuario)
         def count = 0
-        def retorno
+        def retorno = null
+        def vagaLivre = Vaga.findByOcupada(false)
         vagas.each { it ->
             it.find { ite ->
                 def vagaAux = Vaga.findByNumero(ite.vaga.numero)
@@ -54,12 +55,14 @@ class UserController {
                 }
             }
         }
-        def vagaLivre = Vaga.findByOcupada(false)
-        if (count == 0){
+        if ((count == 0) && (vagaLivre==null)){
+            flash.message = "Não existem vagas disponíveis para reserva"
+        } else if (count != 0){
             this.mensagem(vagaLivre)
         } else {
             this.mensagem(retorno)
         }
+        redirect(controller: "vaga", action: "index")
 
     }
 
