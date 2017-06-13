@@ -28,11 +28,7 @@ class HomePage extends Page {
         $(".sugest").click()
     }
 
-    def mensagem(String numero, String tipo, String setor) {
-        $("div", class: "message").text() == ("É sugerido a vaga ${numero} do tipo ${tipo} no setor ${setor} para reserva" as String)
-    }
-
-    def mensagem() {
-        $("div", class: "message").text() == ("Não existem vagas disponiveis para reserva")
+    def sugestHistoric(){
+        $(".sugestHistoric").click()
     }
 }

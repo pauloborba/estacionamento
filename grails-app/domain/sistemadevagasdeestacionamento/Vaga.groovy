@@ -21,14 +21,35 @@ class Vaga {
     }
 
     static Vaga sugestaoVaga (User usuario) {
-                def setor = usuario.preferredSector
-                def tipo = usuario.preferenceType
-                def vaga = findBySetorAndPreferenceTypeAndOcupada(setor,tipo,false)
-                if( vaga == null) {
-                        vaga = findByOcupada(false)
-                    }
-                return vaga
+        def setor = usuario.preferredSector
+        def tipo = usuario.preferenceType
+        def vaga = findBySetorAndPreferenceTypeAndOcupada(setor,tipo,false)
+        if( vaga == null) {
+                vaga = findByOcupada(false)
             }
+        return vaga
+    }
+
+    static Vaga sugestaoVagaHistorico (String usuario) {
+        def retorno = null
+        def count = 0
+        def controller = new VagaController()
+        def vagas = controller.varreReservas(usuario)
+        vagas.each {it ->
+            it.find {ite ->
+                def vagaAux = findByNumero(ite.vaga.numero)
+                if ((!vagaAux.ocupada) && (count == 0)) {
+                    count = 1
+                    retorno = vagaAux
+                }
+            }            
+        }
+        if(count == 0){
+            sugestaoVaga(User.acharUser(usuario))
+        } else {
+            return retorno
+        }
+    }
 
     def ocupar(User usuarioLogado){
         this.setOcupada(true)

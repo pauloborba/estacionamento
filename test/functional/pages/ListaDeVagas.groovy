@@ -49,4 +49,8 @@ class ListaDeVagas extends Page {
     def desocuparReservasExpiradas(){
         $(".remover").click()
     }
+    def mensagem(String numero, String tipo, String setor) {
+        $("div", class: "message").text() == ("É sugerido a vaga ${numero} do tipo ${tipo} no setor ${setor} para reserva" as String)
+    }
+
 }

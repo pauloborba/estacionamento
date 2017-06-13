@@ -40,6 +40,32 @@ class UserController {
         flash.message = "É sugerido a vaga ${vaga.getNumero()} do tipo ${vaga.getPreferenceType()} no setor ${vaga.getSetor()} para reserva"
     }
 
+    def sugestHistoric(String usuario) {
+        def controller = new VagaController()
+        def vagas = controller.varreReservas(usuario)
+        def count = 0
+        def retorno = null
+        def vagaLivre = Vaga.findByOcupada(false)
+        vagas.each { it ->
+            it.find { ite ->
+                def vagaAux = Vaga.findByNumero(ite.vaga.numero)
+                if ((!vagaAux.ocupada) && (count == 0)) {
+                    count = 1
+                    retorno = vagaAux
+                }
+            }
+        }
+        if ((count == 0) && (vagaLivre==null)){
+            flash.message = "Não existem vagas disponíveis para reserva"
+        } else if (count != 0){
+            this.mensagem(retorno)
+        } else {
+            this.mensagem(vagaLivre)
+        }
+        redirect(controller: "vaga", action: "index")
+
+    }
+
     def show(User userInstance) {
         respond userInstance
     }
