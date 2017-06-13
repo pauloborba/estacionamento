@@ -58,9 +58,9 @@ class UserController {
         if ((count == 0) && (vagaLivre==null)){
             flash.message = "Não existem vagas disponíveis para reserva"
         } else if (count != 0){
-            this.mensagem(vagaLivre)
-        } else {
             this.mensagem(retorno)
+        } else {
+            this.mensagem(vagaLivre)
         }
         redirect(controller: "vaga", action: "index")
 
