@@ -6,6 +6,7 @@ class Vaga {
     static hasMany = [reservas:Reserva]
     String preferenceType
     boolean ocupada
+    boolean maintenance
 
     Vaga(){
         reservas = []
@@ -16,6 +17,7 @@ class Vaga {
         setor inList: ["CIn", "CCEN", "Area II"]
         preferenceType inList: ["Normal", "Deficiente", "Idoso"]
         ocupada nullable: false
+        maintenance nullable: false
     }
 
     static Vaga sugestaoVaga (User usuario) {
@@ -33,6 +35,18 @@ class Vaga {
         def reserva = new Reserva(usuario: usuarioLogado, vaga: this, entrada: new Date())
         this.reservas.add(reserva)
         this.save(flush:true)
+    }
+
+    def interditar(User user){
+        if (!this.ocupada) { ocupar(user) } // caso não esteja reservada (ocupada)
+        this.setMaintenance(true)
+        this.save(flush: true)
+    }
+
+    def desinterditar(User user){
+        if (this.ocupada) { desocupar(user) }
+        this.setMaintenance(false)
+        this.save(flush: true)
     }
 
     def desocupar(){

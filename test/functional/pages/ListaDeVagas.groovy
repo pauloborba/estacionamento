@@ -45,4 +45,10 @@ class ListaDeVagas extends Page {
             $("tr").find("td").has("a", text: "Reservar "+numeroVaga).click()
         }
     }
+    def msg(){
+        if(checarManutencao()){
+
+        }
+        $("div", class: "message").text() == ("O usuário não estacionou em nenhuma vaga")
+    }
 }
