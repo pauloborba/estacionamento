@@ -2,7 +2,6 @@
 <%@ page import="sistemadevagasdeestacionamento.Vaga" %>
 <!DOCTYPE html>
 <html>
-<<<<<<< HEAD
 <head>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'vaga.label', default: 'Vaga')}" />
