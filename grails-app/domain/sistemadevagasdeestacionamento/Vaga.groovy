@@ -40,13 +40,12 @@ class Vaga {
     def interditar(User user){
         if (!this.ocupada) { ocupar(user) } // caso não esteja reservada (ocupada)
         this.setMaintenance(true)
-        this.save(flush: true)
     }
 
     def desinterditar(User user){
         if (this.ocupada) { desocupar(user) }
         this.setMaintenance(false)
-        this.save(flush: true)
+
     }
 
     def desocupar(){

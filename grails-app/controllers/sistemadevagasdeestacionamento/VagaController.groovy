@@ -68,7 +68,10 @@ class VagaController {
 
     def manutencao(Vaga vaga) {
         def usuarioLogado = User.findByUsername(AuthHelper.instance.currentUsername)
-        if (usuarioLogado.username == "master"){ vaga.interditar(usuarioLogado) }
+        if (usuarioLogado.username == "master"){
+            vaga.interditar(usuarioLogado)
+            vaga.save(flush: true)
+        }
         redirect(action: "show", id: vaga.id)
     }
 
@@ -79,7 +82,10 @@ class VagaController {
 
         acharEDesocuparVagaAntiga(antigaOcupada, usuarioLogado)  //encontra a vaga ocupada pelo usuario logado e a desocupa
 
-        if (usuarioLogado.username == "master"){ vaga.desinterditar(usuarioLogado) }
+        if (usuarioLogado.username == "master"){
+            vaga.desinterditar(usuarioLogado)
+            vaga.save(flush: true)
+        }
         redirect(action: "show", id: vaga.id)
     }
 
