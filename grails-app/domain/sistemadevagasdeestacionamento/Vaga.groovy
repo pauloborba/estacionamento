@@ -29,14 +29,13 @@ class Vaga {
     }
 
     static Vaga sugestaoVagaHistorico (String usuario) {
-        def retorno
+        def retorno = null
         def count = 0
         def controller = new VagaController()
-        def vagaLivre = Vaga.findByOcupada(false)
         def vagas = controller.varreReservas(usuario)
         vagas.each {it ->
             it.find {ite ->
-                def vagaAux = Vaga.findByNumero(ite.vaga.numero)
+                def vagaAux = findByNumero(ite.vaga.numero)
                 if ((!vagaAux.ocupada) && (count == 0)) {
                     count = 1
                     retorno = vagaAux
@@ -44,7 +43,7 @@ class Vaga {
             }            
         }
         if(count == 0){
-            return vagaLivre
+            sugestaoVaga(User.acharUser(usuario))
         } else {
             return retorno
         }
