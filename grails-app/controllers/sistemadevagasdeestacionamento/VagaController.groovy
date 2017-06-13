@@ -58,12 +58,28 @@ class VagaController {
         if(!vaga.ocupada){
             vaga.ocupar(usuarioLogado)
         }
+
+        if (vaga.maintenance) {
+            flash.message = "a vaga esta em manutenção"
+        }
+
         redirect(action: "show", id: vaga.id)
     }
 
     def manutencao(Vaga vaga) {
         def usuarioLogado = User.findByUsername(AuthHelper.instance.currentUsername)
-        vaga.interditar(usuarioLogado)
+        if (usuarioLogado.username == "master"){ vaga.interditar(usuarioLogado) }
+        redirect(action: "show", id: vaga.id)
+    }
+
+    def terminarManutencao(Vaga vaga){
+        def usuarioLogado = User.findByUsername(AuthHelper.instance.currentUsername)
+
+        def antigaOcupada = varreReservas(usuarioLogado.username) //varre as reservas para ver se o usuario já ocupa alguma vaga
+
+        acharEDesocuparVagaAntiga(antigaOcupada, usuarioLogado)  //encontra a vaga ocupada pelo usuario logado e a desocupa
+
+        if (usuarioLogado.username == "master"){ vaga.desinterditar(usuarioLogado) }
         redirect(action: "show", id: vaga.id)
     }
 

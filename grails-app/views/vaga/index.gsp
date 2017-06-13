@@ -62,6 +62,10 @@
                 <td><g:link action="reservar" id="${vagaInstance.id}">
                     Reservar ${fieldValue(bean: vagaInstance, field: "numero")} </g:link> </td>
 
+                <g:if test="${flash.message}">
+                    <div class="message" role="status">${flash.message}</div>
+                </g:if>
+
             </tr>
         </g:each>
         </tbody>

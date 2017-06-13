@@ -66,6 +66,7 @@
 
 			</li>
 
+			<td><g:link action="terminarManutencao" id="${vagaInstance.id}"> Desinterditar </g:link> </td>
 
 		</g:if>
 
