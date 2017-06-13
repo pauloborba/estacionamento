@@ -10,6 +10,62 @@ class UserController {
         respond User.list(params), model:[userInstanceCount: User.count()]
     }
 
+    def reminder(User user) {
+        def booking = Reserva.findByUsuario(user)
+
+        if (booking){
+            flash.message = "O usuário estacionou na vaga ${booking.vaga.numero} do tipo ${booking.vaga.preferenceType} no setor ${booking.vaga.setor}"
+        } else {
+            flash.message = "O usuário não estacionou em nenhuma vaga"
+        }
+
+        redirect(controller: "home", action: "index")
+    }
+
+    def sugest(User usuario) {
+        def setor = usuario.getPreferredSector()
+        def tipo = usuario.getPreferenceType()
+        def vaga = Vaga.findBySetorAndPreferenceTypeAndOcupada(setor,tipo,false)
+        def vagaAux = Vaga.findByOcupada(false)
+        if ((vaga == null) && vagaAux == null) {
+            flash.message = "Não existem vagas disponíveis para reserva"
+        } else if (vaga == null){
+            this.mensagem(vagaAux)
+        } else {
+            this.mensagem(vaga)
+        }
+        redirect(controller: "vaga", action: "index")
+    }
+    def mensagem(Vaga vaga) {
+        flash.message = "É sugerido a vaga ${vaga.getNumero()} do tipo ${vaga.getPreferenceType()} no setor ${vaga.getSetor()} para reserva"
+    }
+
+    def sugestHistoric(String usuario) {
+        def controller = new VagaController()
+        def vagas = controller.varreReservas(usuario)
+        def count = 0
+        def retorno = null
+        def vagaLivre = Vaga.findByOcupada(false)
+        vagas.each { it ->
+            it.find { ite ->
+                def vagaAux = Vaga.findByNumero(ite.vaga.numero)
+                if ((!vagaAux.ocupada) && (count == 0)) {
+                    count = 1
+                    retorno = vagaAux
+                }
+            }
+        }
+        if ((count == 0) && (vagaLivre==null)){
+            flash.message = "Não existem vagas disponíveis para reserva"
+        } else if (count != 0){
+            this.mensagem(retorno)
+        } else {
+            this.mensagem(vagaLivre)
+        }
+        redirect(controller: "vaga", action: "index")
+
+    }
+
     def show(User userInstance) {
         respond userInstance
     }

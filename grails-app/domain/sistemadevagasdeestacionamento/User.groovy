@@ -15,5 +15,10 @@ class User {
         preferredSector inList: ["CIn", "CCEN", "Área II"]
         preferenceType inList: ["Normal", "Deficiente", "Idoso"]
     }
+
+    static User acharUser (String username) {
+        def usuario = findByUsername(username)
+        return usuario
+    }
     //#end
 }
