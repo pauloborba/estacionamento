@@ -18,10 +18,15 @@ Before() {
 After() {
     AuthHelper.instance.logout()
 
-    User.list().each { it.delete(flush: true) }
-
-
-
+    Vaga.all.each {
+        it.delete(flush: true)
+    }
+    Reserva.all.each {
+        it.delete(flush: true)
+    }
+    User.all.each {
+        it.delete(flush: true)
+    }
     scenarioInterceptor.destroy()
 
     bindingUpdater.remove()
