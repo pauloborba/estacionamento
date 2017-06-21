@@ -19,7 +19,7 @@ class ShowVaga extends Page {
         return $("span", id: "t").text().equals(temp)
     }
 
-    boolean checarManutencao(){
+    boolean checarIndisponivel(){
         InternationalizationHelper helper =  InternationalizationHelper.instance
         String temp = helper.getMessage("default.boolean.true")
         def s = $("span", id: "t").text()
