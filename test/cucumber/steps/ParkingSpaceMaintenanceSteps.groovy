@@ -41,6 +41,6 @@ And(~/^a vaga "([^"]*)" do setor "([^"]*)" do tipo "([^"]*)" aparece como indipo
     at ListaDeVagas
     page.checarIndisponivel()
 }
-Then(~/^eu vejo uma mensagem informando que a vaga está indisponível$/) { String spot, String type, String sector ->
+Then(~/^eu vejo uma mensagem informando que a vaga está indisponível$/) { ->
     assert page.readFlashMessage() != null
 }
