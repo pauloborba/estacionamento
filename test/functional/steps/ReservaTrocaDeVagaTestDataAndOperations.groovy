@@ -1,4 +1,6 @@
 package steps
+
+import sistemadevagasdeestacionamento.UserController
 import sistemadevagasdeestacionamento.Vaga
 import sistemadevagasdeestacionamento.User
 import sistemadevagasdeestacionamento.VagaController
@@ -30,10 +32,36 @@ class ReservaTrocaDeVagaTestDataAndOperations{
         }
     }
 
-    static removerReserva(tempo){
+    static removerReserva(Vaga vaga, int tempo){
         def controlador = new VagaController()
-        controlador.desocuparAposTempo(tempo)
+        controlador.desocuparAposTempo(vaga, tempo)
         controlador.response.reset()
+    }
+    static removerTodasReservas(int tempo){
+        def controlador = new VagaController()
+        controlador.desocuparTodasAposTempo(tempo)
+        controlador.response.reset()
+    }
+
+    static boolean compararReservaVaga(User usuario, Vaga vaga) {
+        def bool = false
+        vaga.reservas.each {it ->
+            if (it.usuario == usuario){
+                bool = true
+            }
+        }
+        bool
+    }
+
+    static boolean compararReservaUser (String user){
+        def bool = false
+        def controller = new VagaController()
+        controller.varreReservas(user).each {it ->
+            if(it.usuario.username == user){
+                bool = true
+            }
+        }
+        bool
     }
 
 }

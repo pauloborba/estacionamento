@@ -68,6 +68,7 @@ Given(~/^eu estou logado no sistema como "([^"]*)"$/) { String username ->
     page.proceed(username, "CIn", "Normal")
 }
 And(~/^eu estou na página principal$/) { ->
+    to HomePage
     at HomePage
 }
 And(~/^eu reservei a vaga "([^"]*)" tipo "([^"]*)" do setor "([^"]*)"$/) { String spot, String type, String sector ->
